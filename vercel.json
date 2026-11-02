@@ -1,10 +1,15 @@
 {
-  "outputDirectory": "showcase",
-  "cleanUrls": true,
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/",
-      "destination": "/index.html"
+      "src": "showcase/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/showcase/$1"
     }
   ]
 }
