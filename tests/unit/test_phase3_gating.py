@@ -15,15 +15,15 @@ from pathlib import Path
 from unittest.mock import MagicMock
 import pytest
 
-from bdiplus_eval.cli.terminal_summary import (
+from agent_eval.cli.terminal_summary import (
     print_terminal_summary,
     process_eval_session_finish,
 )
-from bdiplus_eval.core.schemas import GlobalMetricSummary
-from bdiplus_eval.gating.baseline import load_baseline_metrics
-from bdiplus_eval.gating.comparator import GateStatus
-from bdiplus_eval.gating.evaluator import ReleaseGateEvaluator
-from bdiplus_eval.gating.reporter import generate_json_report, generate_markdown_report
+from agent_eval.core.schemas import GlobalMetricSummary
+from agent_eval.gating.baseline import load_baseline_metrics
+from agent_eval.gating.comparator import GateStatus
+from agent_eval.gating.evaluator import ReleaseGateEvaluator
+from agent_eval.gating.reporter import generate_json_report, generate_markdown_report
 
 
 BASELINE_FILE = Path("benchmarks/baseline_v1_metrics.json")
@@ -114,7 +114,7 @@ def test_release_gate_reports_generated_on_disk(
 
     # 1. Generate and verify Markdown
     md_report = generate_markdown_report(result)
-    assert "# BDIPlus Agent Evaluation & Release Gate Report" in md_report
+    assert "# Enterprise Agent Evaluation & Release Gate Report" in md_report
     assert "[BLOCKED]" in md_report
     assert "| Metric | Baseline | Candidate | Delta | Status | Threshold |" in md_report
     assert "🔴 **FAIL**" in md_report

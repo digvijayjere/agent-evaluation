@@ -16,7 +16,7 @@
     "latency_p95": 145.0,
     "latency_p99": 180.0,
     "metadata": {
-      "benchmark_suite": "BDIPlus Golden Benchmark Suite v1",
+      "benchmark_suite": "Golden Benchmark Suite v1",
       "domains": [
         "retail_banking",
         "insurance_claims"

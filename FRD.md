@@ -1,6 +1,6 @@
 # Functional Requirements Document (FRD)
 
-## Project Name: BDIPlus Agent Evaluation & Release Gating Hub (`BDIPlus-AgentEval-Hub`)
+## Project Name: Enterprise Agent Evaluation & Release Gating Hub (`Enterprise-AgentEval-Hub`)
 
 * **Document Version:** 1.0.0  
 * **Author:** Digvijay Jere  
@@ -12,7 +12,7 @@
 
 ## 1. Introduction & System Purpose
 
-The **BDIPlus-AgentEval-Hub** is an automated evaluation, regression detection, and release gating framework tailored for enterprise AI agents operating across Customer Data Platform (CDP), retail banking, and commercial insurance domains. 
+The **Enterprise-AgentEval-Hub** is an automated evaluation, regression detection, and release gating framework tailored for enterprise AI agents operating across Customer Data Platform (CDP), retail banking, and commercial insurance domains. 
 
 The system transitions evaluation from slow, manual spot-checking to continuous, deterministic, and LLM-assisted verification. It acts as an automated quality gate within CI/CD pipelines, preventing agent hallucinations, metric degradations, and prompt injection vulnerabilities from reaching production.
 
@@ -210,7 +210,7 @@ pytest tests/eval/ --agent-endpoint="http://localhost:8000/v1/chat" --suite=all
 
 # Evaluation with automated release gating against baseline
 pytest tests/eval/ \
-  --agent-endpoint="https://staging.agent.bdiplus.internal/v1/chat" \
+  --agent-endpoint="https://staging.agent.agent_eval.internal/v1/chat" \
   --baseline-metrics="benchmarks/baseline_v1_metrics.json" \
   --gate \
   --gate-threshold=0.03 \

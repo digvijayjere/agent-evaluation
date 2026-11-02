@@ -1,5 +1,5 @@
 # ==============================================================================
-# BDIPlus-AgentEval-Hub: Core System Requirements
+# Enterprise-AgentEval-Hub: Core System Requirements
 # Target Platform: Python >= 3.11
 # Traceability: Aligned with BRD.md, FRD.md, and SCOPE.md
 # ==============================================================================

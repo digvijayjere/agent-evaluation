@@ -1,4 +1,4 @@
-name: BDIPlus Agent Evaluation & Release Gate
+name: Enterprise Agent Evaluation & Release Gate
 
 on:
   push:

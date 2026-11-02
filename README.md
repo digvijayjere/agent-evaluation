@@ -1,4 +1,4 @@
-# BDIPlus Enterprise AI Agent Evaluation & Release Gating Hub
+# Enterprise AI Agent Evaluation & Release Gating Hub
 
 An enterprise evaluation framework, deterministic & LLM-as-a-judge scoring engine, and automated release gating pipeline for Customer Data Platform (CDP) AI agents in Retail Banking and Insurance domains.
 

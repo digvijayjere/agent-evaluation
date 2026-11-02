@@ -1,5 +1,5 @@
 # ==============================================================================
-# BDIPlus-AgentEval-Hub: Development, Linting & Type Checking Requirements
+# Enterprise-AgentEval-Hub: Development, Linting & Type Checking Requirements
 # ==============================================================================
 -r requirements.txt
 

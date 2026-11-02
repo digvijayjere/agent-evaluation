@@ -4,17 +4,17 @@ import os
 from unittest.mock import MagicMock, patch
 import pytest
 
-from bdiplus_eval.core.schemas import AgentResponse, DomainSegment, EvalTestCase, GlobalMetricSummary, InputCategory, JudgeScore, PriorityTier
-from bdiplus_eval.telemetry.langfuse_sink import (
+from agent_eval.core.schemas import AgentResponse, DomainSegment, EvalTestCase, GlobalMetricSummary, InputCategory, JudgeScore, PriorityTier
+from agent_eval.telemetry.langfuse_sink import (
     LangfuseTelemetrySink,
     MockTelemetrySink,
     get_telemetry_sink,
 )
-from bdiplus_eval.telemetry.scores import (
+from agent_eval.telemetry.scores import (
     publish_case_scores,
     publish_global_summary_scores,
 )
-from bdiplus_eval.telemetry.tracer import EvaluationTracer
+from agent_eval.telemetry.tracer import EvaluationTracer
 
 
 @pytest.fixture

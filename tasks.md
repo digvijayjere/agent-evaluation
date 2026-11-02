@@ -1,6 +1,6 @@
 # Implementation Tasks & Verification Plan
 
-## Project Name: BDIPlus Agent Evaluation & Release Gating Hub (`BDIPlus-AgentEval-Hub`)
+## Project Name: Enterprise Agent Evaluation & Release Gating Hub (`Enterprise-AgentEval-Hub`)
 
 * **Target Stack:** Python 3.11+, `pytest`, Pydantic v2, Langfuse SDK  
 * **Source Documents:**  
@@ -31,7 +31,7 @@ Establish the repository directory structure, configure environment dependencies
   * **Description:** Create the directory hierarchy for source modules, test suites, datasets, benchmarks, and reports.
   * **Target Structure:**
     ```
-    bdiplus_eval/
+    agent_eval/
     ├── __init__.py
     ├── core/               # Configuration, logging, models
     ├── datasets/           # Dataset loaders and validation
@@ -49,7 +49,7 @@ Establish the repository directory structure, configure environment dependencies
     ```
   * **Dependencies:** Python 3.11+, [requirements.txt](file:///c:/Users/Admin/OneDrive/Desktop/Agent_evaluation/requirements.txt)
 
-* [x] **TASK-1.2: Pydantic Data Models & Enums (`bdiplus_eval/core/schemas.py`)**
+* [x] **TASK-1.2: Pydantic Data Models & Enums (`agent_eval/core/schemas.py`)**
   * **Description:** Implement immutable Pydantic models for evaluation test cases and evaluation outputs:
     * `DomainSegment` enum (`retail_banking`, `insurance_enterprise`, `cdp_identity`, `cross_domain`)
     * `InputCategory` enum (`expected`, `degraded`, `segment_specific`, `adversarial`)
@@ -57,15 +57,15 @@ Establish the repository directory structure, configure environment dependencies
     * `EvalTestCase` schema: `test_case_id`, `domain_segment`, `input_category`, `priority`, `input_prompt`, `context_documents`, `expected_output`, `expected_entities`, `allowed_topics`, `injection_type`, `metadata`
     * `AgentResponse` schema: `raw_output`, `extracted_entities`, `latency_ms`, `status_code`, `error_message`
     * `TestCaseResult` schema: `test_case_id`, `scores` (dict of metric:score), `passed`, `reasoning`
-  * **Target File:** `bdiplus_eval/core/schemas.py`
+  * **Target File:** `agent_eval/core/schemas.py`
   * **Traceability:** FR-1.1, FR-1.2
 
-* [x] **TASK-1.3: Dataset Loader & Cryptographic Integrity Checker (`bdiplus_eval/datasets/loader.py`)**
+* [x] **TASK-1.3: Dataset Loader & Cryptographic Integrity Checker (`agent_eval/datasets/loader.py`)**
   * **Description:** Build dataset loading utilities that:
     1. Ingest JSON and JSONL test files and deserialize them into `list[EvalTestCase]` with strict validation.
     2. Compute SHA-256 hash of dataset files and compare against `data/checksums.sha256`. Raise `IntegrityError` upon uncommitted/tampered edits.
     3. Filter test cases dynamically by `domain_segment`, `input_category`, and `priority`.
-  * **Target File:** `bdiplus_eval/datasets/loader.py`
+  * **Target File:** `agent_eval/datasets/loader.py`
   * **Traceability:** FR-1.1, FR-1.3
 
 * [x] **TASK-1.4: Curate Normal / Expected Golden Dataset (`data/golden/expected_cases.json`)**
@@ -127,46 +127,46 @@ Implement deterministic metric calculators (Exact Match, Precision, Recall, F1, 
 
 ### Atomic Tasks
 
-* [x] **TASK-2.1: Deterministic Metric Calculators (`bdiplus_eval/metrics/deterministic.py`)**
+* [x] **TASK-2.1: Deterministic Metric Calculators (`agent_eval/metrics/deterministic.py`)**
   * **Description:** Implement mathematically verified deterministic scoring functions:
     * `calculate_exact_match(actual: str, expected: str) -> float` (0.0 or 1.0)
     * `calculate_entity_metrics(actual_entities: list[dict], expected_entities: list[dict]) -> tuple[float, float, float]` (Precision, Recall, F1 score)
     * `validate_json_schema(payload: str, schema: type[BaseModel]) -> bool`
     * `calculate_latency_stats(latencies: list[float]) -> dict[str, float]` ($p_{50}, p_{90}, p_{95}, p_{99}$)
-  * **Target File:** `bdiplus_eval/metrics/deterministic.py`
+  * **Target File:** `agent_eval/metrics/deterministic.py`
   * **Traceability:** FR-3.1, SCOPE 2.3
 
-* [x] **TASK-2.2: LLM Judge Prompt Templates & Rubrics (`bdiplus_eval/metrics/judge_prompts.py`)**
+* [x] **TASK-2.2: LLM Judge Prompt Templates & Rubrics (`agent_eval/metrics/judge_prompts.py`)**
   * **Description:** Implement strict, parameterized system prompt templates for 1–5 discrete Likert grading:
     * **Faithfulness Rubric:** Measures factual consistency against provided context documents (1 = Severe hallucination, 5 = Fully grounded).
     * **Relevance Rubric:** Measures prompt addressing and completeness (1 = Irrelevant, 5 = Highly complete).
     * **Constraint Adherence Rubric:** Measures compliance with disclaimers, refusal of adversarial injections, and regulatory constraints (1 = Critical violation, 5 = Flawless adherence).
     * Enforce strict JSON output schema: `{"score": int, "reasoning": str, "violations": list[str]}`.
-  * **Target File:** `bdiplus_eval/metrics/judge_prompts.py`
+  * **Target File:** `agent_eval/metrics/judge_prompts.py`
   * **Traceability:** FR-3.2, SCOPE 2.3
 
-* [x] **TASK-2.3: Deterministic LLM Judge Client (`bdiplus_eval/metrics/judge_client.py`)**
+* [x] **TASK-2.3: Deterministic LLM Judge Client (`agent_eval/metrics/judge_client.py`)**
   * **Description:** Implement the judge invocation client:
     1. Multi-provider wrapper supporting LiteLLM, OpenAI, and Google Gemini.
     2. Enforce deterministic generation: `temperature=0.0` and fixed seed.
     3. Resilience wrapper using `tenacity` for exponential backoff on HTTP 429 / 5xx (up to 3 retries).
     4. Robust JSON extraction parser handling markdown-fenced code blocks (` ```json ... ``` `).
-  * **Target File:** `bdiplus_eval/metrics/judge_client.py`
+  * **Target File:** `agent_eval/metrics/judge_client.py`
   * **Traceability:** FR-3.2, FR-3.3, NFR-2, NFR-5
 
-* [x] **TASK-2.4: Target Agent HTTP Client & Mock Adapter (`bdiplus_eval/core/agent_client.py`)**
+* [x] **TASK-2.4: Target Agent HTTP Client & Mock Adapter (`agent_eval/core/agent_client.py`)**
   * **Description:** Build client connectors to communicate with candidate agents:
     * `AsyncAgentClient`: Asynchronous `httpx` client invoking target REST endpoint (`POST /v1/chat`), capturing payload, headers, status codes, and latency in milliseconds.
     * `MockAgent`: Deterministic in-memory mock agent returning pre-configured responses for isolated testing and CI dry-runs.
     * Enforce default 30-second timeout per test case.
-  * **Target File:** `bdiplus_eval/core/agent_client.py`
+  * **Target File:** `agent_eval/core/agent_client.py`
   * **Traceability:** FR-2.2, FR-2.3
 
-* [x] **TASK-2.5: Pytest Plugin Fixtures & Configuration (`bdiplus_eval/cli/pytest_plugin.py` & `conftest.py`)**
+* [x] **TASK-2.5: Pytest Plugin Fixtures & Configuration (`agent_eval/cli/pytest_plugin.py` & `conftest.py`)**
   * **Description:** Implement custom pytest hooks:
     * Add custom command-line options via `pytest_addoption`: `--agent-endpoint`, `--suite`, `--baseline-metrics`, `--gate`, `--gate-threshold`, `--langfuse-sync`, `--report-out`.
     * Fixtures: `eval_dataset` (loads filtered test cases), `agent_client` (instantiates target connector), `eval_judge` (instantiates LLM judge client).
-  * **Target Files:** `bdiplus_eval/cli/pytest_plugin.py`, `tests/conftest.py`
+  * **Target Files:** `agent_eval/cli/pytest_plugin.py`, `tests/conftest.py`
   * **Traceability:** FR-2.1, FR-7.1, FR-7.2
 
 * [x] **TASK-2.6: Parallel Execution & Evaluation Test Engine (`tests/eval/test_agent_evaluation.py`)**
@@ -195,44 +195,44 @@ Implement the regression detection engine, compute baseline vs candidate metric 
 
 ### Atomic Tasks
 
-* [x] **TASK-3.1: Baseline Metrics Schema & Ingestion (`bdiplus_eval/gating/baseline.py`)**
+* [x] **TASK-3.1: Baseline Metrics Schema & Ingestion (`agent_eval/gating/baseline.py`)**
   * **Description:** Create baseline metrics loader:
     * Ingest reference JSON benchmark artifacts (e.g., `benchmarks/baseline_v1_metrics.json`).
     * Validate metrics schema (`GlobalMetricSummary`: F1, Precision, Recall, Faithfulness, Relevance, AdversarialRefusalRate, LatencyP95).
-  * **Target File:** `bdiplus_eval/gating/baseline.py`
+  * **Target File:** `agent_eval/gating/baseline.py`
   * **Traceability:** FR-4.1
 
-* [x] **TASK-3.2: Delta Calculation & Regression Logic (`bdiplus_eval/gating/comparator.py`)**
+* [x] **TASK-3.2: Delta Calculation & Regression Logic (`agent_eval/gating/comparator.py`)**
   * **Description:** Implement mathematical delta formulas:
     * Relative drop: $\Delta M = \frac{M_{cand} - M_{base}}{M_{base}} \times 100\%$
     * Absolute drop: $\delta M = M_{base} - M_{cand}$
     * Output: `MetricComparisonResult` detailing status (`PASS`, `WARN`, `FAIL`) per metric.
-  * **Target File:** `bdiplus_eval/gating/comparator.py`
+  * **Target File:** `agent_eval/gating/comparator.py`
   * **Traceability:** FR-4.2, FR-5.1
 
-* [x] **TASK-3.3: Release Gating Evaluator (`bdiplus_eval/gating/evaluator.py`)**
+* [x] **TASK-3.3: Release Gating Evaluator (`agent_eval/gating/evaluator.py`)**
   * **Description:** Enforce strict release gating rules:
     * F1 relative drop $\Delta \text{F1} < -3.0\%$ $\to$ **FAIL GATE**
     * Precision relative drop $\Delta \text{Precision} < -3.0\%$ $\to$ **FAIL GATE**
     * Faithfulness absolute drop $\delta > 0.15$ or score $< 4.50$ $\to$ **FAIL GATE**
     * Any adversarial P0 test failure (safety breach) $\to$ **IMMEDIATE FAIL GATE**
     * Latency $p_{95}$ increase $> 25\%$ $\to$ **WARN**
-  * **Target File:** `bdiplus_eval/gating/evaluator.py`
+  * **Target File:** `agent_eval/gating/evaluator.py`
   * **Traceability:** FR-4.3, FR-5.2
 
-* [x] **TASK-3.4: Automated Report Generator (`bdiplus_eval/gating/reporter.py`)**
+* [x] **TASK-3.4: Automated Report Generator (`agent_eval/gating/reporter.py`)**
   * **Description:** Implement report export:
     * `generate_markdown_report(result: GateEvaluationResult) -> str`: Formatted tables with status badges, delta comparisons, and failure logs for PR comments.
     * `generate_json_report(result: GateEvaluationResult, path: Path) -> None`: Machine-readable summary for downstream CI/CD pipelines.
-  * **Target File:** `bdiplus_eval/gating/reporter.py`
+  * **Target File:** `agent_eval/gating/reporter.py`
   * **Traceability:** FR-4.4
 
-* [x] **TASK-3.5: Pytest Terminal Summary Hook & Exit Code Controller (`bdiplus_eval/cli/terminal_summary.py`)**
+* [x] **TASK-3.5: Pytest Terminal Summary Hook & Exit Code Controller (`agent_eval/cli/terminal_summary.py`)**
   * **Description:** Hook into `pytest_sessionfinish`:
     * Render rich terminal summary tables using `rich`.
     * If `--gate` is enabled and any gating rule failed, set `session.exitstatus = 1`.
     * If gating rules passed, set `session.exitstatus = 0`.
-  * **Target File:** `bdiplus_eval/cli/terminal_summary.py`
+  * **Target File:** `agent_eval/cli/terminal_summary.py`
   * **Traceability:** FR-7.3
 
 * [x] **TASK-3.6: Seed Reference Baseline Benchmark (`benchmarks/baseline_v1_metrics.json`)**
@@ -261,26 +261,26 @@ Integrate the Langfuse telemetry sink for trace, span, and score ingestion, esta
 
 ### Atomic Tasks
 
-* [x] **TASK-4.1: Langfuse Telemetry Client & Credential Guard (`bdiplus_eval/telemetry/langfuse_sink.py`)**
+* [x] **TASK-4.1: Langfuse Telemetry Client & Credential Guard (`agent_eval/telemetry/langfuse_sink.py`)**
   * **Description:** Implement telemetry sink:
     * Verify `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` when `--langfuse-sync` is enabled.
     * Provide non-blocking graceful fallback if Langfuse API is unreachable (log warning, do not fail evaluation).
-  * **Target File:** `bdiplus_eval/telemetry/langfuse_sink.py`
+  * **Target File:** `agent_eval/telemetry/langfuse_sink.py`
   * **Traceability:** FR-5.1, RSK-04
 
-* [x] **TASK-4.2: Hierarchical Trace & Span Instrumentation (`bdiplus_eval/telemetry/tracer.py`)**
+* [x] **TASK-4.2: Hierarchical Trace & Span Instrumentation (`agent_eval/telemetry/tracer.py`)**
   * **Description:** Instrument evaluation execution:
     * Root Trace: `eval-run-{run_id}` tagged with candidate version, git commit SHA, branch, and runner ID.
     * Parent Span: `test-suite-{suite_name}`.
     * Child Span: `test-case-{test_case_id}` recording input prompt, context, response payload, and latency.
-  * **Target File:** `bdiplus_eval/telemetry/tracer.py`
+  * **Target File:** `agent_eval/telemetry/tracer.py`
   * **Traceability:** FR-6.1
 
-* [x] **TASK-4.3: Metric & Score Publishing Pipeline (`bdiplus_eval/telemetry/scores.py`)**
+* [x] **TASK-4.3: Metric & Score Publishing Pipeline (`agent_eval/telemetry/scores.py`)**
   * **Description:** Push numerical scores to Langfuse:
     * Ingest `faithfulness`, `relevance`, `f1_score`, `precision`, `adversarial_safety`.
     * Attach reasoning strings and violation tags to trace score metadata.
-  * **Target File:** `bdiplus_eval/telemetry/scores.py`
+  * **Target File:** `agent_eval/telemetry/scores.py`
   * **Traceability:** FR-6.1
 
 * [x] **TASK-4.4: Sample CDP Financial & Insurance Agent Stubs (`tests/mock_agents/`)**

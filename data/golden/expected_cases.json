@@ -60,7 +60,7 @@
     "priority": "P1",
     "input_prompt": "What is the daily outgoing domestic wire transfer limit and cutoff time?",
     "context_documents": [
-      "BDIPlus Retail Wire Policy:\nDomestic Outgoing Wire Daily Limit: $50,000.00 per customer for standard online banking.\nCutoff Time: 4:30 PM EST on business days.\nProcessing Fee: $25.00 for online submission."
+      "Retail Wire Policy:\nDomestic Outgoing Wire Daily Limit: $50,000.00 per customer for standard online banking.\nCutoff Time: 4:30 PM EST on business days.\nProcessing Fee: $25.00 for online submission."
     ],
     "expected_output": "The daily outgoing domestic wire transfer limit for online banking is $50,000.00. The same-day processing cutoff time is 4:30 PM EST on business days, with a $25.00 online processing fee.",
     "expected_entities": [
@@ -78,7 +78,7 @@
     "priority": "P1",
     "input_prompt": "What routing number should I use for setting up direct deposit with my employer?",
     "context_documents": [
-      "Bank Routing Info:\nBDIPlus Federal Savings Bank\nDirect Deposit / Electronic ACH Routing Number (ABA): 021000089\nDomestic Wire Routing Number: 021000092\nBranch: New York Main Office"
+      "Bank Routing Info:\nApex Federal Savings Bank\nDirect Deposit / Electronic ACH Routing Number (ABA): 021000089\nDomestic Wire Routing Number: 021000092\nBranch: New York Main Office"
     ],
     "expected_output": "For direct deposit (electronic ACH), use routing number (ABA) 021000089. Please note that wire transfers use a different routing number (021000092).",
     "expected_entities": [
@@ -335,7 +335,7 @@
     "priority": "P1",
     "input_prompt": "What is my current credit card rewards points balance and cash redemption value?",
     "context_documents": [
-      "Rewards Program: BDIPlus Apex Rewards\nMember: CUST-8831\nAvailable Points Balance: 42,500 points\nCash Back Redemption Rate: 1 point = $0.01 (1.0 cent)\nTotal Cash Equivalent: $425.00\nExpiring Points: 0 points expiring in next 90 days"
+      "Rewards Program: Apex Premier Rewards\nMember: CUST-8831\nAvailable Points Balance: 42,500 points\nCash Back Redemption Rate: 1 point = $0.01 (1.0 cent)\nTotal Cash Equivalent: $425.00\nExpiring Points: 0 points expiring in next 90 days"
     ],
     "expected_output": "You have 42,500 available rewards points, which have a cash back redemption value of $425.00 (at 1 point = $0.01). None of your points are expiring in the next 90 days.",
     "expected_entities": [
@@ -421,7 +421,7 @@
     "priority": "P1",
     "input_prompt": "What is the foreign transaction fee on my debit card when traveling in Europe?",
     "context_documents": [
-      "Debit Card Terms:\nCard: BDIPlus Mastercard Debit\nForeign Transaction Fee: 3.0% of the converted transaction amount in US Dollars for purchases made outside the United States or in foreign currencies.\nATM Foreign Currency Fee: $3.00 + 3.0% FX conversion."
+      "Debit Card Terms:\nCard: Apex Mastercard Debit\nForeign Transaction Fee: 3.0% of the converted transaction amount in US Dollars for purchases made outside the United States or in foreign currencies.\nATM Foreign Currency Fee: $3.00 + 3.0% FX conversion."
     ],
     "expected_output": "The foreign transaction fee on your debit card is 3.0% of the converted US Dollar amount for purchases made abroad or in foreign currencies. For foreign ATM withdrawals, the fee is $3.00 plus the 3.0% conversion fee.",
     "expected_entities": [

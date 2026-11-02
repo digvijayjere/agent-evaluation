@@ -3,7 +3,7 @@
 import pytest
 from pydantic import BaseModel, Field
 
-from bdiplus_eval.metrics.deterministic import (
+from agent_eval.metrics.deterministic import (
     calculate_entity_metrics,
     calculate_exact_match,
     calculate_latency_stats,

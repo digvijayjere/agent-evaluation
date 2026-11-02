@@ -16,17 +16,17 @@ import sys
 from pathlib import Path
 import pytest
 
-from bdiplus_eval.core.schemas import EvalTestCase
-from bdiplus_eval.datasets.loader import load_datasets_from_directory
-from bdiplus_eval.gating.baseline import aggregate_candidate_results, load_baseline_metrics
-from bdiplus_eval.gating.comparator import GateStatus
-from bdiplus_eval.gating.evaluator import ReleaseGateEvaluator
-from bdiplus_eval.gating.reporter import generate_json_report, generate_markdown_report
-from bdiplus_eval.metrics.deterministic import calculate_entity_metrics, calculate_exact_match
-from bdiplus_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
-from bdiplus_eval.telemetry.langfuse_sink import MockTelemetrySink
-from bdiplus_eval.telemetry.scores import publish_case_scores, publish_global_summary_scores
-from bdiplus_eval.telemetry.tracer import EvaluationTracer
+from agent_eval.core.schemas import EvalTestCase
+from agent_eval.datasets.loader import load_datasets_from_directory
+from agent_eval.gating.baseline import aggregate_candidate_results, load_baseline_metrics
+from agent_eval.gating.comparator import GateStatus
+from agent_eval.gating.evaluator import ReleaseGateEvaluator
+from agent_eval.gating.reporter import generate_json_report, generate_markdown_report
+from agent_eval.metrics.deterministic import calculate_entity_metrics, calculate_exact_match
+from agent_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
+from agent_eval.telemetry.langfuse_sink import MockTelemetrySink
+from agent_eval.telemetry.scores import publish_case_scores, publish_global_summary_scores
+from agent_eval.telemetry.tracer import EvaluationTracer
 from tests.mock_agents.compliant_agent import CompliantAgent
 from tests.mock_agents.regressed_agent import RegressedAgent
 

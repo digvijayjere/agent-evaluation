@@ -1,7 +1,7 @@
 """Unit tests for pytest plugin options and fixtures."""
 
-from bdiplus_eval.core.agent_client import MockAgent
-from bdiplus_eval.metrics.judge_client import JudgeClient
+from agent_eval.core.agent_client import MockAgent
+from agent_eval.metrics.judge_client import JudgeClient
 
 
 def test_eval_config_defaults(eval_config):

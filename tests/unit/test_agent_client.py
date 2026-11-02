@@ -2,12 +2,12 @@
 
 import pytest
 
-from bdiplus_eval.core.agent_client import (
+from agent_eval.core.agent_client import (
     HTTPAgentClient,
     MockAgent,
     create_agent_client,
 )
-from bdiplus_eval.core.schemas import (
+from agent_eval.core.schemas import (
     DomainSegment,
     EvalTestCase,
     InputCategory,

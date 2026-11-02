@@ -1,6 +1,6 @@
 # System Requirements & Traceability Matrix (RTM)
 
-## Project Name: BDIPlus Agent Evaluation & Release Gating Hub (`BDIPlus-AgentEval-Hub`)
+## Project Name: Enterprise Agent Evaluation & Release Gating Hub (`Enterprise-AgentEval-Hub`)
 
 * **Version:** 1.0.0  
 * **Author:** Digvijay Jere  
@@ -15,7 +15,7 @@
 
 ## 1. Executive Summary & Purpose
 
-This document provides a consolidated, cross-functional specification of all technical, operational, and system requirements for the **BDIPlus-AgentEval-Hub**. It establishes the formal **Requirements Traceability Matrix (RTM)**, linking high-level business objectives from the BRD to functional modules in the FRD, boundaries in the Scope Document, and concrete Python dependencies in `requirements.txt`.
+This document provides a consolidated, cross-functional specification of all technical, operational, and system requirements for the **Enterprise-AgentEval-Hub**. It establishes the formal **Requirements Traceability Matrix (RTM)**, linking high-level business objectives from the BRD to functional modules in the FRD, boundaries in the Scope Document, and concrete Python dependencies in `requirements.txt`.
 
 ---
 

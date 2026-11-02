@@ -2,8 +2,8 @@
 
 import pytest
 
-from bdiplus_eval.core.schemas import GlobalMetricSummary
-from bdiplus_eval.gating.comparator import (
+from agent_eval.core.schemas import GlobalMetricSummary
+from agent_eval.gating.comparator import (
     GateStatus,
     calculate_absolute_delta,
     calculate_relative_delta,

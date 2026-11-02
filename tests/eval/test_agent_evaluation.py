@@ -11,15 +11,15 @@ Evaluates candidate agents across golden test cases:
 from typing import Any, Dict, List
 import pytest
 
-from bdiplus_eval.core.agent_client import BaseAgentClient
-from bdiplus_eval.core.schemas import EvalTestCase, InputCategory, PriorityTier
-from bdiplus_eval.metrics.deterministic import (
+from agent_eval.core.agent_client import BaseAgentClient
+from agent_eval.core.schemas import EvalTestCase, InputCategory, PriorityTier
+from agent_eval.metrics.deterministic import (
     calculate_entity_metrics,
     calculate_exact_match,
 )
-from bdiplus_eval.metrics.judge_client import JudgeClient
-from bdiplus_eval.telemetry.scores import publish_case_scores
-from bdiplus_eval.telemetry.tracer import EvaluationTracer
+from agent_eval.metrics.judge_client import JudgeClient
+from agent_eval.telemetry.scores import publish_case_scores
+from agent_eval.telemetry.tracer import EvaluationTracer
 
 
 def test_evaluate_case(

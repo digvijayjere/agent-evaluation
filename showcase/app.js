@@ -1,5 +1,5 @@
 /**
- * BDIPlus Agent Evaluation Showcase Interactive Logic
+ * Enterprise Agent Evaluation Showcase Interactive Logic
  * Provides real-time release gate simulation, golden case explorer, and telemetry visualization.
  */
 

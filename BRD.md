@@ -1,6 +1,6 @@
 # Business Requirements Document (BRD)
 
-## Project Name: BDIPlus Agent Evaluation & Release Gating Hub (`BDIPlus-AgentEval-Hub`)
+## Project Name: Enterprise Agent Evaluation & Release Gating Hub (`Enterprise-AgentEval-Hub`)
 
 **Author:** Digvijay Jere  
 **Target Platform:** Google Antigravity / Enterprise Data Transformation Consulting
@@ -9,9 +9,9 @@
 
 ## 1\. Executive Summary
 
-BDIPlus requires a robust, automated evaluation and regression testing framework for its enterprise Customer Data Platform (CDP) and financial/insurance domain AI agents. Currently, manual evaluation of agent outputs creates bottlenecks, risks regressions during prompt/model updates, and lacks reproducible gating mechanisms prior to production release.
+Enterprise requires a robust, automated evaluation and regression testing framework for its enterprise Customer Data Platform (CDP) and financial/insurance domain AI agents. Currently, manual evaluation of agent outputs creates bottlenecks, risks regressions during prompt/model updates, and lacks reproducible gating mechanisms prior to production release.
 
-This Business Requirements Document (BRD) establishes the functional and operational foundations for the **BDIPlus-AgentEval-Hub**, enabling automated evaluation harnesses, LLM-as-a-judge scoring, multi-segment dataset testing, and automated release gating integrated with Langfuse.
+This Business Requirements Document (BRD) establishes the functional and operational foundations for the **Enterprise-AgentEval-Hub**, enabling automated evaluation harnesses, LLM-as-a-judge scoring, multi-segment dataset testing, and automated release gating integrated with Langfuse.
 
 ---
 

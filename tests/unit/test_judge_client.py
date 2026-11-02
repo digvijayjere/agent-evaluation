@@ -2,7 +2,7 @@
 
 import pytest
 
-from bdiplus_eval.core.schemas import (
+from agent_eval.core.schemas import (
     AgentResponse,
     DomainSegment,
     EvalTestCase,
@@ -10,7 +10,7 @@ from bdiplus_eval.core.schemas import (
     JudgeScore,
     PriorityTier,
 )
-from bdiplus_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
+from agent_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
 
 
 def test_mock_judge_evaluations():

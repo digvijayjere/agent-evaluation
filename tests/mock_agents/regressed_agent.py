@@ -12,8 +12,8 @@ import asyncio
 import time
 from typing import Any, Dict, List, Optional
 
-from bdiplus_eval.core.agent_client import BaseAgentClient
-from bdiplus_eval.core.schemas import AgentResponse, EvalTestCase, InputCategory, PriorityTier
+from agent_eval.core.agent_client import BaseAgentClient
+from agent_eval.core.schemas import AgentResponse, EvalTestCase, InputCategory, PriorityTier
 
 
 class RegressedAgent(BaseAgentClient):

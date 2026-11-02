@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from bdiplus_eval.core.schemas import (
+from agent_eval.core.schemas import (
     DomainSegment,
     InputCategory,
     PriorityTier,

@@ -6,22 +6,22 @@ Terminal command:
 
 import pytest
 
-from bdiplus_eval.core.agent_client import MockAgent, create_agent_client
-from bdiplus_eval.core.schemas import (
+from agent_eval.core.agent_client import MockAgent, create_agent_client
+from agent_eval.core.schemas import (
     DomainSegment,
     EvalTestCase,
     InputCategory,
     JudgeScore,
     PriorityTier,
 )
-from bdiplus_eval.metrics.deterministic import (
+from agent_eval.metrics.deterministic import (
     calculate_entity_metrics,
     calculate_exact_match,
     calculate_latency_stats,
     validate_json_schema,
 )
-from bdiplus_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
-from bdiplus_eval.metrics.judge_prompts import (
+from agent_eval.metrics.judge_client import JudgeClient, MockJudgeProvider
+from agent_eval.metrics.judge_prompts import (
     CONSTRAINT_ADHERENCE_SYSTEM_PROMPT,
     FAITHFULNESS_SYSTEM_PROMPT,
     RELEVANCE_SYSTEM_PROMPT,

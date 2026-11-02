@@ -1,6 +1,6 @@
 # Project Scope Document
 
-## Project Name: BDIPlus Agent Evaluation & Release Gating Hub (`BDIPlus-AgentEval-Hub`)
+## Project Name: Enterprise Agent Evaluation & Release Gating Hub (`Enterprise-AgentEval-Hub`)
 
 * **Document Version:** 1.0.0  
 * **Author:** Digvijay Jere  
@@ -12,9 +12,9 @@
 
 ## 1. Project Background & Objective
 
-BDIPlus develops and deploys enterprise AI agents tailored for Customer Data Platforms (CDP) and financial/insurance domain workflows. Prior to this initiative, agent verification relied on manual, subjective spot-checking taking up to 3 days per release cycle. This manual approach created deployment bottlenecks, failed to capture regression across prompt iterations, and provided no automated gating mechanism to block substandard builds.
+Enterprise develops and deploys enterprise AI agents tailored for Customer Data Platforms (CDP) and financial/insurance domain workflows. Prior to this initiative, agent verification relied on manual, subjective spot-checking taking up to 3 days per release cycle. This manual approach created deployment bottlenecks, failed to capture regression across prompt iterations, and provided no automated gating mechanism to block substandard builds.
 
-The **BDIPlus-AgentEval-Hub** establishes an automated, reproducible testing and release gating framework. This document formally defines the boundaries, deliverables, out-of-scope items, work breakdown structure (WBS), resource responsibilities, and acceptance criteria for the project.
+The **Enterprise-AgentEval-Hub** establishes an automated, reproducible testing and release gating framework. This document formally defines the boundaries, deliverables, out-of-scope items, work breakdown structure (WBS), resource responsibilities, and acceptance criteria for the project.
 
 ---
 
@@ -88,7 +88,7 @@ To ensure laser focus on evaluation and release gating, the following areas are 
 | :--- | :--- | :--- |
 | **Model Pre-training & Fine-tuning** | Training, LoRA fine-tuning, or parameter updates for foundational LLMs. | The hub evaluates model outputs black-box / gray-box; model training is managed by upstream ML platform teams. |
 | **Custom Graphical User Interface (GUI)** | Developing dedicated React/Vue web applications or front-end portals. | The framework focuses on CLI, automated CI/CD runners, and headless evaluation. Langfuse provides the visual dashboard. |
-| **Production Inference Hosting** | Orchestrating production agent deployment, autoscaling, or Kubernetes serving pods. | Handled by BDIPlus production platform DevOps infrastructure. |
+| **Production Inference Hosting** | Orchestrating production agent deployment, autoscaling, or Kubernetes serving pods. | Handled by Enterprise production platform DevOps infrastructure. |
 | **Real Customer PII / Live Data Ingestion** | Extracting or ingesting unmasked live customer data from production CDPs. | Evaluation must strictly use synthetic, de-identified, or approved golden benchmarks to maintain regulatory compliance. |
 | **Non-Agent Infrastructure Monitoring** | Server metrics, CPU/memory profiling, database monitoring, or cluster health checks. | Handled by standard infrastructure monitoring tools (e.g., Datadog, Prometheus). |
 | **Human-in-the-Loop Review UI** | Interactive browser interfaces for manual human annotation or labelling. | Focus is strictly on automated deterministic rules and LLM-as-a-judge scoring. |

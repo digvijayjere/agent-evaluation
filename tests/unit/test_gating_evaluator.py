@@ -4,10 +4,10 @@ import json
 from pathlib import Path
 import pytest
 
-from bdiplus_eval.core.schemas import GlobalMetricSummary
-from bdiplus_eval.gating.comparator import GateStatus
-from bdiplus_eval.gating.evaluator import GateEvaluationResult, ReleaseGateEvaluator
-from bdiplus_eval.gating.reporter import generate_json_report, generate_markdown_report
+from agent_eval.core.schemas import GlobalMetricSummary
+from agent_eval.gating.comparator import GateStatus
+from agent_eval.gating.evaluator import GateEvaluationResult, ReleaseGateEvaluator
+from agent_eval.gating.reporter import generate_json_report, generate_markdown_report
 
 
 @pytest.fixture
@@ -149,7 +149,7 @@ def test_markdown_and_json_reporter(tmp_path: Path, baseline_summary: GlobalMetr
 
     # 1. Test Markdown Report
     md = generate_markdown_report(result)
-    assert "# BDIPlus Agent Evaluation & Release Gate Report" in md
+    assert "# Enterprise Agent Evaluation & Release Gate Report" in md
     assert "[BLOCKED]" in md
     assert "F1 Score" in md
     assert "🔴 **FAIL**" in md

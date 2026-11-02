@@ -4,8 +4,8 @@ import json
 from pathlib import Path
 import pytest
 
-from bdiplus_eval.core.schemas import DomainSegment, InputCategory, PriorityTier
-from bdiplus_eval.datasets.loader import (
+from agent_eval.core.schemas import DomainSegment, InputCategory, PriorityTier
+from agent_eval.datasets.loader import (
     IntegrityError,
     SchemaValidationError,
     compute_file_sha256,
@@ -99,7 +99,7 @@ def test_filtering_test_cases(sample_test_case_dict):
     c2_dict["input_category"] = "adversarial"
     c2_dict["priority"] = "P0"
 
-    from bdiplus_eval.core.schemas import EvalTestCase
+    from agent_eval.core.schemas import EvalTestCase
 
     c1 = EvalTestCase.model_validate(c1_dict)
     c2 = EvalTestCase.model_validate(c2_dict)

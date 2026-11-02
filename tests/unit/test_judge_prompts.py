@@ -2,8 +2,8 @@
 
 import pytest
 
-from bdiplus_eval.core.schemas import JudgeScore
-from bdiplus_eval.metrics.judge_prompts import (
+from agent_eval.core.schemas import JudgeScore
+from agent_eval.metrics.judge_prompts import (
     CONSTRAINT_ADHERENCE_SYSTEM_PROMPT,
     FAITHFULNESS_SYSTEM_PROMPT,
     RELEVANCE_SYSTEM_PROMPT,

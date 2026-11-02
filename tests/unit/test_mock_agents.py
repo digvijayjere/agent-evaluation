@@ -1,7 +1,7 @@
 """Unit tests for CompliantAgent and RegressedAgent mock stubs."""
 
 import pytest
-from bdiplus_eval.core.schemas import DomainSegment, EvalTestCase, InputCategory, PriorityTier
+from agent_eval.core.schemas import DomainSegment, EvalTestCase, InputCategory, PriorityTier
 from tests.mock_agents.compliant_agent import CompliantAgent
 from tests.mock_agents.regressed_agent import RegressedAgent
 

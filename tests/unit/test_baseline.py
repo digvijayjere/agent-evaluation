@@ -3,8 +3,8 @@
 from pathlib import Path
 import pytest
 
-from bdiplus_eval.core.schemas import GlobalMetricSummary
-from bdiplus_eval.gating.baseline import (
+from agent_eval.core.schemas import GlobalMetricSummary
+from agent_eval.gating.baseline import (
     BaselineError,
     aggregate_candidate_results,
     load_baseline_metrics,

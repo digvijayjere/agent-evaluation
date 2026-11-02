@@ -7,13 +7,13 @@ Terminal command:
 from pathlib import Path
 import pytest
 
-from bdiplus_eval.core.schemas import (
+from agent_eval.core.schemas import (
     DomainSegment,
     EvalTestCase,
     InputCategory,
     PriorityTier,
 )
-from bdiplus_eval.datasets.loader import (
+from agent_eval.datasets.loader import (
     compute_file_sha256,
     load_checksum_manifest,
     load_dataset_file,
