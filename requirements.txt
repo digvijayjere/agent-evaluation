@@ -1,0 +1,56 @@
+# ==============================================================================
+# BDIPlus-AgentEval-Hub: Core System Requirements
+# Target Platform: Python >= 3.11
+# Traceability: Aligned with BRD.md, FRD.md, and SCOPE.md
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Core Testing & Pytest Harness (FRD Section 7 / FR-2, SCOPE Section 2.2)
+# ------------------------------------------------------------------------------
+pytest>=8.1.1
+pytest-xdist>=3.5.0          # Parallel worker test execution across CPU cores
+pytest-asyncio>=0.23.6       # Asynchronous agent endpoint & coroutine testing
+pytest-timeout>=2.3.1        # Per-test execution timeouts (default: 30s cap)
+pytest-cov>=5.0.0            # Test suite coverage reporting
+
+# ------------------------------------------------------------------------------
+# 2. Schema Validation & Test Data Models (FRD Section 3 / FR-1, SCOPE Section 2.1)
+# ------------------------------------------------------------------------------
+pydantic>=2.6.4              # Strongly-typed EvalTestCase & report schemas
+pydantic-settings>=2.2.1     # Environment & configuration management
+
+# ------------------------------------------------------------------------------
+# 3. Deterministic Evaluation & NLP Metrics (FRD Section 4.1 / FR-3.1, SCOPE Section 2.3)
+# ------------------------------------------------------------------------------
+numpy>=1.26.4                # Statistical calculations (percentiles, p50, p95 latency)
+scikit-learn>=1.4.2          # Precision, Recall, F1 score computation
+rouge-score>=0.1.2           # Text summarization overlap evaluation
+nltk>=3.8.1                  # Text tokenization & lexical matching
+
+# ------------------------------------------------------------------------------
+# 4. LLM-as-a-Judge & Grader Pipeline (FRD Section 4.2 / FR-3.2, SCOPE Section 2.3)
+# ------------------------------------------------------------------------------
+litellm>=1.35.8              # Multi-provider LLM gateway (Gemini, OpenAI, Anthropic)
+openai>=1.25.0               # Direct OpenAI judge endpoint support
+google-generativeai>=0.5.2   # Google Gemini judge model integration
+tenacity>=8.2.3              # Exponential backoff retry logic for rate limits (HTTP 429)
+tiktoken>=0.6.0              # Token usage counting and budget tracking
+
+# ------------------------------------------------------------------------------
+# 5. Enterprise Observability & Telemetry (FRD Section 6 / FR-5, SCOPE Section 2.5)
+# ------------------------------------------------------------------------------
+langfuse>=2.27.1             # Langfuse Python SDK for trace, span & score ingestion
+
+# ------------------------------------------------------------------------------
+# 6. HTTP Client & Agent Ingestion (FRD Section 7 / FR-2.2, SCOPE Section 2.2)
+# ------------------------------------------------------------------------------
+httpx[http2]>=0.27.0         # High-performance async HTTP client for agent REST APIs
+aiohttp>=3.9.4               # Async transport alternative for batch endpoint calls
+
+# ------------------------------------------------------------------------------
+# 7. CLI, Gating & Reporting Engine (FRD Section 5 & 7 / FR-4, SCOPE Section 2.4)
+# ------------------------------------------------------------------------------
+rich>=13.7.1                 # Terminal formatting & visual evaluation summaries
+tabulate>=0.9.0              # Markdown table generation for CI/CD reports
+click>=8.1.7                 # CLI argument parsing and release gating hooks
+python-dotenv>=1.0.1         # Secure loading of API keys (.env)

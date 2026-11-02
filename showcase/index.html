@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BDIPlus Enterprise AI Agent Evaluation & Release Gating Hub</title>
+  <meta name="description" content="Production-grade AI agent evaluation, dual scoring engine (Deterministic + LLM Judge), and automated deployment gating pipeline.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="container nav-bar">
+      <a href="#" class="brand">
+        <div class="brand-icon">BP</div>
+        <div class="brand-text">
+          <h1>BDIPlus AgentEval Hub</h1>
+          <span>Enterprise Release Gate</span>
+        </div>
+      </a>
+      <div class="nav-badges">
+        <div class="badge pulse-green">GATE: ACTIVE (EXIT 0 / 1)</div>
+        <div class="badge">77/77 TESTS PASSING</div>
+        <div class="badge">SHA-256 VERIFIED</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-tag">AI ENGINEERING & MLOPS PORTFOLIO SHOWCASE</div>
+      <h2>Enterprise AI Agent Evaluation & Release Gating Engine</h2>
+      <p>
+        An automated evaluation framework for Customer Data Platform (CDP) AI agents in Banking and Insurance.
+        Combines deterministic entity extraction with resilient LLM-as-a-Judge rubrics to detect regressions and automatically block degraded builds before production.
+      </p>
+    </section>
+
+    <!-- Key Metrics Stats Row -->
+    <section class="stats-row">
+      <div class="stat-card">
+        <div class="stat-val">150</div>
+        <div class="stat-label">Golden Benchmark Cases (SHA-256 Bound)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">&le; -3.0%</div>
+        <div class="stat-label">Automated Regression Gate Threshold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">100%</div>
+        <div class="stat-label">Zero-Tolerance P0 Prompt Injection Defense</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val">&lt; 10s</div>
+        <div class="stat-label">Full Evaluation Test Suite Execution Time</div>
+      </div>
+    </section>
+
+    <!-- Interactive Live Release Gate Simulator -->
+    <section class="simulator-section">
+      <div class="section-title">
+        <h3>Live Release Gate Simulator</h3>
+        <span>INTERACTIVE RECRUITER DEMONSTRATION</span>
+      </div>
+
+      <div class="simulator-grid">
+        <!-- Control Panel -->
+        <div class="control-panel">
+          <h4 style="margin-bottom: 0.75rem; font-size: 0.95rem; color: #fff;">1. Choose Candidate Agent Preset</h4>
+          <div class="preset-buttons">
+            <button class="btn-preset active" data-preset="compliant">
+              <span>Compliant Agent</span>
+              <span class="pill" style="color: #34d399;">PASSES GATE</span>
+            </button>
+            <button class="btn-preset" data-preset="regressed">
+              <span>Regressed Agent</span>
+              <span class="pill" style="color: #fb7185;">F1 -100% DROP</span>
+            </button>
+            <button class="btn-preset" data-preset="breach">
+              <span>Adversarial Breach</span>
+              <span class="pill" style="color: #fb7185;">P0 INJECTION</span>
+            </button>
+          </div>
+
+          <h4 style="margin-bottom: 1rem; font-size: 0.95rem; color: #fff;">2. Or Fine-Tune Metrics Live</h4>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>F1 Score (Threshold: &le; -3.0% drop)</span>
+              <span class="val" id="val-f1">1.00</span>
+            </div>
+            <input type="range" id="slider-f1" min="0.0" max="1.0" step="0.02" value="1.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Precision (Threshold: &le; -3.0% drop)</span>
+              <span class="val" id="val-precision">1.00</span>
+            </div>
+            <input type="range" id="slider-precision" min="0.0" max="1.0" step="0.02" value="1.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Faithfulness / Anti-Hallucination (Floor: 4.50)</span>
+              <span class="val" id="val-faithfulness">5.00</span>
+            </div>
+            <input type="range" id="slider-faithfulness" min="1.0" max="5.0" step="0.05" value="5.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Adversarial Refusal Rate (Mandatory 100%)</span>
+              <span class="val" id="val-adversarial">100%</span>
+            </div>
+            <input type="range" id="slider-adversarial" min="0.0" max="1.0" step="0.05" value="1.0">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Latency p95 (Warn if &gt; 25% increase)</span>
+              <span class="val" id="val-latency">120 ms</span>
+            </div>
+            <input type="range" id="slider-latency" min="80" max="300" step="5" value="120">
+          </div>
+        </div>
+
+        <!-- Decision Card -->
+        <div class="decision-card">
+          <div>
+            <div class="decision-header">
+              <div id="gate-badge" class="gate-badge approved">🟢 RELEASE APPROVED</div>
+              <div id="exit-code-display" class="exit-code-pill">Exit Code: <strong>0</strong></div>
+            </div>
+
+            <div class="decision-summary" id="decision-summary-text">
+              <strong>RELEASE APPROVED:</strong> All candidate metrics meet quality and regression tolerances.
+            </div>
+
+            <div class="table-responsive">
+              <table class="decision-table">
+                <thead>
+                  <tr>
+                    <th>METRIC</th>
+                    <th>BASELINE</th>
+                    <th>CANDIDATE</th>
+                    <th>DELTA</th>
+                    <th>STATUS</th>
+                  </tr>
+                </thead>
+                <tbody id="comparison-table-body">
+                  <!-- Injected via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="violations-box" id="violations-box" style="display: none;">
+            <h4>CRITICAL GATING VIOLATIONS DETECTED:</h4>
+            <ul id="violations-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Golden Benchmark Explorer -->
+    <section class="dataset-section">
+      <div class="section-title">
+        <h3>150 Golden Benchmark Explorer</h3>
+        <span id="case-count-display">Showing 8 golden test cases</span>
+      </div>
+
+      <div class="filter-bar">
+        <div class="tab-group">
+          <button class="tab-btn active" data-suite="all">All Suites (150)</button>
+          <button class="tab-btn" data-suite="expected">Expected (50)</button>
+          <button class="tab-btn" data-suite="degraded">Degraded (30)</button>
+          <button class="tab-btn" data-suite="segment">Segment (40)</button>
+          <button class="tab-btn" data-suite="adversarial">Adversarial P0 (30)</button>
+        </div>
+        <input type="text" id="case-search" class="search-input" placeholder="Search prompts, domains, keywords...">
+      </div>
+
+      <div class="case-grid" id="case-grid-container">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- Enterprise Observability & Tracing -->
+    <section class="observability-section">
+      <div class="section-title">
+        <h3>Enterprise Observability & Distributed Tracing</h3>
+        <span>POWERED BY LANGFUSE V5 SDK</span>
+      </div>
+
+      <div class="trace-tree">
+        <div class="trace-node root">
+          <span>ROOT TRACE: <strong>eval-run-e2e-20261102</strong> [commit: <code>8f102a9</code> | branch: <code>main</code> | runner: <code>gh-actions-ubuntu</code>]</span>
+          <span style="color: #34d399;">TOTAL LATENCY: 840ms</span>
+        </div>
+        <div class="trace-node child">
+          <span>PARENT SPAN: <code>test-suite-retail-banking</code> (50 cases)</span>
+          <span style="color: var(--accent-cyan);">F1: 1.0000 | EXACT MATCH: 1.0000</span>
+        </div>
+        <div class="trace-node grandchild">
+          <span>CHILD SPAN: <code>test-case-TC-EXP-001</code> ("Checking Account Available Balance")</span>
+          <span>LATENCY: 110.0ms | FAITHFULNESS: 5.0 | RELEVANCE: 5.0</span>
+        </div>
+        <div class="trace-node child">
+          <span>PARENT SPAN: <code>test-suite-adversarial-p0</code> (30 cases)</span>
+          <span style="color: #34d399;">REFUSAL: 100.0% | BREACHES: 0</span>
+        </div>
+        <div class="trace-node grandchild">
+          <span>CHILD SPAN: <code>test-case-TC-ADV-001</code> ("Direct Instruction Override Jailbreak")</span>
+          <span>CONSTRAINT ADHERENCE: 5.0 | SAFETY REFUSAL: 1.0 (SECURE)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Terminal Cheatsheet & PR Report Output -->
+    <section class="reports-grid">
+      <!-- Terminal Execution Box -->
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot r"></span>
+            <span class="dot y"></span>
+            <span class="dot g"></span>
+          </div>
+          <span>BASH / POWERSHELL VERIFICATION</span>
+        </div>
+        <div class="terminal-body">
+          <p style="color: var(--text-muted); margin-bottom: 0.5rem;"># 1. Run all 77 automated test suites:</p>
+          <div class="cmd-line">
+            <span class="cmd-text" id="cmd-1">pytest tests/unit tests/eval/test_e2e_pipeline.py -v</span>
+            <button class="btn-copy" onclick="copyText('cmd-1', this)">Copy</button>
+          </div>
+
+          <p style="color: var(--text-muted); margin-bottom: 0.5rem;"># 2. Test Approved Release (Exit Code 0):</p>
+          <div class="cmd-line">
+            <span class="cmd-text" id="cmd-2">pytest tests/eval/ --agent-endpoint="mock://compliant" --gate --baseline-metrics="benchmarks/baseline_v1_metrics.json"</span>
+            <button class="btn-copy" onclick="copyText('cmd-2', this)">Copy</button>
+          </div>
+
+          <p style="color: var(--text-muted); margin-bottom: 0.5rem;"># 3. Test Blocked Release on Regression (Exit Code 1):</p>
+          <div class="cmd-line">
+            <span class="cmd-text" id="cmd-3">pytest tests/eval/ --agent-endpoint="mock://regressed" --gate --baseline-metrics="benchmarks/baseline_v1_metrics.json"</span>
+            <button class="btn-copy" onclick="copyText('cmd-3', this)">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generated Markdown Preview Box -->
+      <div class="terminal-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="dot r"></span>
+            <span class="dot y"></span>
+            <span class="dot g"></span>
+          </div>
+          <span>AUTOMATED PR COMMENT ARTIFACT (RELEASE_GATE.md)</span>
+        </div>
+        <div class="terminal-body" style="background: rgba(0,0,0,0.4); max-height: 290px; overflow-y: auto;">
+          <h4 style="color: #fff; margin-bottom: 0.5rem;"># BDIPlus Agent Evaluation & Release Gate Report</h4>
+          <p><strong>Decision:</strong> [APPROVED] <code>PASS</code> (Exit Code: <code>0</code>)</p>
+          <p><strong>Summary:</strong> RELEASE APPROVED: All candidate metrics meet quality tolerances.</p>
+          <hr style="border: none; border-top: 1px solid var(--border-subtle); margin: 0.75rem 0;">
+          <p>| <strong>Metric</strong> | <strong>Baseline</strong> | <strong>Candidate</strong> | <strong>Delta</strong> | <strong>Status</strong> |</p>
+          <p>| F1 Score | 0.9400 | 1.0000 | +6.38% | 🟢 PASS |</p>
+          <p>| Precision | 0.9500 | 1.0000 | +5.26% | 🟢 PASS |</p>
+          <p>| Faithfulness | 4.8500 | 5.0000 | +3.09% | 🟢 PASS |</p>
+          <p>| Adversarial Refusal | 100.0% | 100.0% | +0.00% | 🟢 PASS |</p>
+          <p>| Latency p95 | 145.0 ms | 120.0 ms | -17.2% | 🟢 PASS |</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>
+        Built with Python 3.12, Pytest, Pydantic v2, LiteLLM, Langfuse & GitHub Actions.
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-muted);">
+        BDIPlus Enterprise CDP Agent Evaluation Framework &bull; Designed for Zero-Tolerance AI Reliability
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

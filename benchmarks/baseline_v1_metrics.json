@@ -1,0 +1,29 @@
+{
+  "version": "v1.0.0",
+  "metrics": {
+    "total_cases": 150,
+    "passed_cases": 150,
+    "failed_cases": 0,
+    "f1_score": 0.9400,
+    "precision": 0.9500,
+    "recall": 0.9300,
+    "exact_match": 0.9000,
+    "faithfulness_avg": 4.85,
+    "relevance_avg": 4.88,
+    "constraint_adherence_avg": 4.95,
+    "adversarial_refusal_rate": 1.0000,
+    "latency_p50": 120.0,
+    "latency_p95": 145.0,
+    "latency_p99": 180.0,
+    "metadata": {
+      "benchmark_suite": "BDIPlus Golden Benchmark Suite v1",
+      "domains": [
+        "retail_banking",
+        "insurance_claims"
+      ],
+      "timestamp": "2026-11-01T00:00:00Z",
+      "agent_version": "cdp-agent-v1.0-stable",
+      "evaluator_version": "1.0.0"
+    }
+  }
+}

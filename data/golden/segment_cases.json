@@ -1,0 +1,712 @@
+[
+  {
+    "test_case_id": "TC-SEG-BANK-001",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is my liability limit under Regulation E if my debit card is lost or stolen?",
+    "context_documents": [
+      "Consumer Financial Protection Bureau - Regulation E (12 CFR 1005.6):\nConsumer Liability for Unauthorized Transfers:\n1. Notice within 2 business days of learning of loss/theft: Maximum liability is lesser of $50 or unauthorized transfers before notice.\n2. Notice after 2 business days but within 60 calendar days of transmittal of periodic statement: Liability up to $500.\n3. Notice after 60 calendar days: Unlimited liability for transfers occurring after the 60-day period until notice is provided."
+    ],
+    "expected_output": "Under Regulation E, your liability depends on when you report the loss: (1) Within 2 business days: Maximum $50 liability. (2) After 2 business days but within 60 calendar days of your statement: Up to $500 liability. (3) After 60 calendar days: Unlimited liability for unauthorized transfers occurring after that 60-day window.",
+    "expected_entities": [
+      {"type": "regulation", "value": "Regulation E"},
+      {"type": "tier_1_limit", "value": "$50"},
+      {"type": "tier_2_limit", "value": "$500"},
+      {"type": "window_tier_1", "value": "2 business days"},
+      {"type": "window_tier_2", "value": "60 calendar days"}
+    ],
+    "allowed_topics": ["consumer_protection", "regulation_e", "unauthorized_transactions"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-002",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the difference between Annual Percentage Rate (APR) and nominal interest rate under Truth in Lending?",
+    "context_documents": [
+      "Truth in Lending Act (Regulation Z - 12 CFR 1026.18):\nNominal Interest Rate: The base cost of borrowing expressed as a percentage without fees or compounding.\nAnnual Percentage Rate (APR): The broader annualized measure of the total cost of credit, encompassing the nominal interest rate plus mandatory prepaid finance charges (origination fees, discount points, private mortgage insurance, and processing costs)."
+    ],
+    "expected_output": "Under Truth in Lending (Regulation Z), the nominal interest rate is the base borrowing rate applied to your principal. The APR is a comprehensive annualized figure reflecting the total cost of credit, combining the interest rate with mandatory upfront fees, points, and financing charges.",
+    "expected_entities": [
+      {"type": "regulation", "value": "Regulation Z"},
+      {"type": "term", "value": "APR"},
+      {"type": "term", "value": "nominal interest rate"}
+    ],
+    "allowed_topics": ["truth_in_lending", "regulation_z", "apr"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-003",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "When must funds from a large check deposit over $5,525 be made available under Regulation CC?",
+    "context_documents": [
+      "Expedited Funds Availability Act (Regulation CC - 12 CFR 229.13):\nLarge Deposit Exception Hold (Deposits exceeding $5,525 aggregate in a single banking day):\n- First $225: Available next business day.\n- Next $5,300: Available second business day for standard local checks.\n- Excess over $5,525: Subject to exception hold, available no later than the 7th business day following deposit."
+    ],
+    "expected_output": "Under Regulation CC large-deposit exception rules (deposits exceeding $5,525 in a day): $225 is available the next business day, $5,300 is available on the second business day, and the remaining excess over $5,525 may be held until the 7th business day.",
+    "expected_entities": [
+      {"type": "regulation", "value": "Regulation CC"},
+      {"type": "threshold", "value": "$5,525"},
+      {"type": "next_day_amount", "value": "$225"},
+      {"type": "exception_hold", "value": "7th business day"}
+    ],
+    "allowed_topics": ["funds_availability", "regulation_cc"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "Federal Reserve"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-004",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does FDIC deposit insurance cover my individual and joint accounts at the same bank?",
+    "context_documents": [
+      "Federal Deposit Insurance Corporation (FDIC - 12 CFR Part 330):\nStandard Maximum Deposit Insurance Amount (SMDIA): $250,000 per depositor, per insured depository institution, for each account ownership category.\nSingle Accounts: Insured up to $250,000 in aggregate across all individual accounts.\nJoint Accounts: Insured up to $250,000 per co-owner (e.g., two co-owners have $500,000 aggregate coverage for their joint ownership category), separately insured from their single accounts."
+    ],
+    "expected_output": "FDIC insurance covers $250,000 per depositor, per bank, per ownership category. Your individual accounts are insured up to $250,000 total. Joint accounts are insured separately up to $250,000 per co-owner ($500,000 total for two owners), distinct from your individual accounts.",
+    "expected_entities": [
+      {"type": "statutory_limit", "value": "$250,000"},
+      {"type": "joint_limit_two_owners", "value": "$500,000"},
+      {"type": "agency", "value": "FDIC"}
+    ],
+    "allowed_topics": ["fdic_insurance", "deposit_safety"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FDIC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-005",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What are my rights to receive an Adverse Action notice under the Equal Credit Opportunity Act?",
+    "context_documents": [
+      "Equal Credit Opportunity Act (Regulation B - 12 CFR 1002.9):\nNotice of Adverse Action:\nTiming: Creditor must notify applicant within 30 calendar days of receiving a completed credit application.\nContent Required: Statement of action taken, name and address of creditor, statement of provisions of Section 701(a) of the Act, and specific principal reasons for denial or notice of applicant's right to receive reasons within 60 days of request."
+    ],
+    "expected_output": "Under ECOA (Regulation B), a creditor must provide written notice of adverse action within 30 days of receiving your completed credit application. The notice must specify the principal reasons for credit denial (or provide notice of your right to request reasons within 60 days) and include anti-discrimination disclosures.",
+    "expected_entities": [
+      {"type": "regulation", "value": "Regulation B"},
+      {"type": "statutory_timeline", "value": "30 calendar days"},
+      {"type": "disclosure", "value": "Adverse Action"}
+    ],
+    "allowed_topics": ["credit_denial", "regulation_b", "ecoa"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-006",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does the Right to Financial Privacy Act protect my banking records from government agencies?",
+    "context_documents": [
+      "Right to Financial Privacy Act (12 U.S.C. 3401 et seq.):\nGeneral Rule: Federal government agencies cannot access customer financial records held by financial institutions unless authorized by: (1) customer written authorization, (2) administrative subpoena/summons, (3) search warrant, (4) judicial subpoena, or (5) formal written request.\nPrecondition: The customer must be given advance statutory notice and opportunity to challenge disclosure in court (with narrow exceptions for national security / grand jury)."
+    ],
+    "expected_output": "The Right to Financial Privacy Act prohibits federal agencies from obtaining your financial records without a valid legal mechanism (such as a search warrant, court order, or written authorization). In most cases, you must receive advance notice and an opportunity to challenge the request in federal court.",
+    "expected_entities": [
+      {"type": "statute", "value": "Right to Financial Privacy Act"},
+      {"type": "safeguard", "value": "advance statutory notice"}
+    ],
+    "allowed_topics": ["financial_privacy", "government_access"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "US Code"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-007",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the dispute window for credit card billing errors under the Fair Credit Billing Act?",
+    "context_documents": [
+      "Fair Credit Billing Act (FCBA - 15 U.S.C. 1666):\nDispute Window: Consumer must submit written notice of billing error within 60 days after the creditor mailed the first bill reflecting the error.\nCreditor Obligations:\n- Acknowledge receipt within 30 days.\n- Investigate and resolve dispute within two complete billing cycles (maximum 90 days).\n- Cannot attempt to collect disputed amount or report as delinquent during investigation."
+    ],
+    "expected_output": "Under the Fair Credit Billing Act, you must submit written notice of a billing error within 60 days of the date the first statement containing the error was sent. The creditor must acknowledge your notice within 30 days and resolve the dispute within two billing cycles (max 90 days).",
+    "expected_entities": [
+      {"type": "statute", "value": "Fair Credit Billing Act"},
+      {"type": "dispute_window", "value": "60 days"},
+      {"type": "resolution_window", "value": "two complete billing cycles"}
+    ],
+    "allowed_topics": ["billing_disputes", "fcba"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FTC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-008",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What cash transaction amount triggers a Currency Transaction Report (CTR) under the Bank Secrecy Act?",
+    "context_documents": [
+      "Bank Secrecy Act (FinCEN - 31 CFR 1010.311):\nCurrency Transaction Report (CTR) Requirement:\nMandatory Filing Threshold: Cash transactions (currency deposits, withdrawals, exchanges) exceeding $10,000.00 conducted by, or on behalf of, one person in a single business day.\nAggregation: Multiple cash transactions across branches in a single day totaling over $10,000 must be aggregated.\nStructuring Prohibited: Breaking transactions into smaller sums to evade CTR is a federal crime under 31 U.S.C. 5324."
+    ],
+    "expected_output": "Under the Bank Secrecy Act, a bank must file a Currency Transaction Report (CTR) with FinCEN for cash transactions (deposits or withdrawals) exceeding $10,000.00 conducted in a single business day. Intentionally splitting transactions to avoid this threshold constitutes illegal structuring.",
+    "expected_entities": [
+      {"type": "statute", "value": "Bank Secrecy Act"},
+      {"type": "threshold", "value": "$10,000.00"},
+      {"type": "form", "value": "Currency Transaction Report"}
+    ],
+    "allowed_topics": ["bsa_aml", "currency_transaction_reports"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FinCEN"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-009",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "Can a bank charge an overdraft fee on a prepaid account without explicit opt-in under CFPB rules?",
+    "context_documents": [
+      "Consumer Financial Protection Bureau - Prepaid Accounts Rule (12 CFR 1005.18 & 12 CFR 1026.61):\nHybrid Prepaid-Credit Cards & Overdraft:\nRequirement: Financial institutions cannot extend credit or assess overdraft fees on prepaid accounts unless the consumer explicitly opts in to a linked hybrid credit feature and passes an ability-to-pay underwriting assessment.\nFee Restrictions: Total fees charged for credit during the first year cannot exceed 25% of the credit limit."
+    ],
+    "expected_output": "No. Under the CFPB Prepaid Accounts Rule, a financial institution is strictly prohibited from assessing overdraft fees or extending credit on a prepaid account unless the customer explicitly opts in to a linked credit feature and undergoes an ability-to-pay assessment.",
+    "expected_entities": [
+      {"type": "rule", "value": "Prepaid Accounts Rule"},
+      {"type": "prohibition", "value": "explicit opt-in required"}
+    ],
+    "allowed_topics": ["prepaid_cards", "cfpb_rules", "overdraft"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-010",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What opt-out rights do I have regarding sharing my non-public personal information under GLBA?",
+    "context_documents": [
+      "Gramm-Leach-Bliley Act (GLBA Privacy Rule - 16 CFR Part 313):\nCustomer Opt-Out Rights:\nScope: Customers have the statutory right to opt out of having their non-public personal financial information shared with non-affiliated third parties.\nExceptions (Cannot opt out): Sharing required for processing transactions, servicing accounts, legal compliance, fraud prevention, or joint marketing agreements under formal written confidentiality contracts."
+    ],
+    "expected_output": "Under the Gramm-Leach-Bliley Act (GLBA), you have the right to opt out of having your non-public personal financial information shared with non-affiliated third parties. However, opt-outs do not apply to essential processing, fraud prevention, legal compliance, or joint marketing partners.",
+    "expected_entities": [
+      {"type": "statute", "value": "Gramm-Leach-Bliley Act"},
+      {"type": "right", "value": "opt out"},
+      {"type": "category", "value": "non-affiliated third parties"}
+    ],
+    "allowed_topics": ["privacy", "glba"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FTC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-011",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "When must my lender deliver the Loan Estimate after I apply for a mortgage under RESPA/TRID?",
+    "context_documents": [
+      "TILA-RESPA Integrated Disclosure (TRID Rule - 12 CFR 1026.19):\nLoan Estimate (LE) Timing:\nStatutory Deadline: Creditor must deliver or place in the mail the Loan Estimate no later than 3 business days after receiving the consumer's completed application.\nTrigger Elements (6 pieces of info): Consumer's name, monthly income, Social Security number, property address, estimate of property value, and loan amount sought."
+    ],
+    "expected_output": "Under the TRID/RESPA rule, your mortgage lender must deliver or mail the Loan Estimate no later than 3 business days after receiving your completed application (consisting of your name, income, SSN, property address, estimated value, and loan amount).",
+    "expected_entities": [
+      {"type": "rule", "value": "TRID"},
+      {"type": "statutory_timeline", "value": "3 business days"},
+      {"type": "document", "value": "Loan Estimate"}
+    ],
+    "allowed_topics": ["mortgage", "respa", "trid"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-012",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What interest rate cap applies to pre-service debts under the Servicemembers Civil Relief Act (SCRA)?",
+    "context_documents": [
+      "Servicemembers Civil Relief Act (SCRA - 50 U.S.C. 3937):\nInterest Rate Cap: Maximum 6.0% annual interest rate on debts incurred prior to military service (including mortgages, credit cards, auto loans, and personal loans) during the period of active duty service.\nMortgage Extension: The 6.0% cap extends for 1 year following termination of military service for mortgage obligations.\nRetroactive Forgiveness: Any interest exceeding 6% is permanently forgiven, not deferred."
+    ],
+    "expected_output": "Under the SCRA, interest rates on debts incurred prior to active military service are capped at 6.0% annually during active duty (and for 1 year post-service for mortgages). Any interest exceeding 6% must be permanently forgiven by the lender.",
+    "expected_entities": [
+      {"type": "statute", "value": "SCRA"},
+      {"type": "rate_cap", "value": "6.0%"},
+      {"type": "benefit", "value": "permanently forgiven"}
+    ],
+    "allowed_topics": ["military_banking", "scra"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "DoD"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-013",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "During what hours are debt collectors legally permitted to contact consumers under FDCPA?",
+    "context_documents": [
+      "Fair Debt Collection Practices Act (FDCPA - 15 U.S.C. 1692c):\nCommunication in Connection with Debt Collection:\nPermissible Calling Hours: Between 8:00 AM and 9:00 PM local time at the consumer's location.\nProhibited Times: Before 8:00 AM or after 9:00 PM local time, unless the consumer has given explicit prior consent for another time."
+    ],
+    "expected_output": "Under the FDCPA, debt collectors may only contact consumers between 8:00 AM and 9:00 PM local time at the consumer's location, unless prior consent is given for alternate hours.",
+    "expected_entities": [
+      {"type": "statute", "value": "FDCPA"},
+      {"type": "earliest_hour", "value": "8:00 AM"},
+      {"type": "latest_hour", "value": "9:00 PM"}
+    ],
+    "allowed_topics": ["debt_collection", "fdcpa"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FTC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-014",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What makes a substitute check legally equivalent to an original paper check under the Check 21 Act?",
+    "context_documents": [
+      "Check Clearing for the 21st Century Act (Check 21 - 12 CFR 229.51):\nLegal Equivalence of Substitute Checks:\nA substitute check is the legal equivalent of an original paper check if it:\n1. Accurately represents all information on the front and back of original check when truncated.\n2. Bears the legend: 'This is a legal copy of your check. You can use it the same way you would use the original check.'\n3. Accurately replicates the MICR encoding line."
+    ],
+    "expected_output": "Under Check 21, a substitute check is legally equivalent to the original check if it accurately reproduces all front and back information, bears the required legal legend ('This is a legal copy of your check...'), and replicates the MICR encoding line.",
+    "expected_entities": [
+      {"type": "statute", "value": "Check 21 Act"},
+      {"type": "required_legend", "value": "This is a legal copy of your check"},
+      {"type": "encoding", "value": "MICR"}
+    ],
+    "allowed_topics": ["check_processing", "check_21"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "Federal Reserve"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-015",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the UCC Article 4 midnight deadline for returning an unpaid check?",
+    "context_documents": [
+      "Uniform Commercial Code (UCC Section 4-104 & 4-301):\nMidnight Deadline:\nDefinition: Midnight on the bank's next banking day following the banking day on which the bank receives the relevant item or notice.\nConsequence: If a payor bank fails to return an unpaid check or give notice of dishonor by the midnight deadline, the bank becomes strictly liable for the face amount of the check."
+    ],
+    "expected_output": "Under UCC Article 4, the midnight deadline is midnight on the next banking day following the day the bank received the check. If the bank misses this deadline without returning the item or sending notice of dishonor, it becomes strictly accountable for the full amount of the check.",
+    "expected_entities": [
+      {"type": "statute", "value": "UCC Article 4"},
+      {"type": "deadline", "value": "midnight on the next banking day"}
+    ],
+    "allowed_topics": ["commercial_code", "ucc_article_4", "check_dishonor"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "UCC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-016",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What must a financial institution do before substituting electronic disclosures for paper under the E-SIGN Act?",
+    "context_documents": [
+      "Electronic Signatures in Global and National Commerce Act (E-SIGN - 15 U.S.C. 7001):\nConsumer Consent Provision:\nRequirement: Institution must provide a statement of hardware and software requirements, inform consumer of right to receive paper copy and withdraw consent, and consumer must affirmatively consent in a manner that reasonably demonstrates that the consumer can access information in the electronic form that will be used."
+    ],
+    "expected_output": "Under the E-SIGN Act, before replacing paper disclosures with electronic delivery, the institution must inform the consumer of hardware/software requirements, disclose paper withdrawal rights, and obtain the consumer's affirmative consent demonstrated electronically.",
+    "expected_entities": [
+      {"type": "statute", "value": "E-SIGN Act"},
+      {"type": "consent_standard", "value": "demonstrates that the consumer can access information"}
+    ],
+    "allowed_topics": ["electronic_disclosures", "e_sign_act"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FTC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-017",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the core purpose of the Community Reinvestment Act (CRA)?",
+    "context_documents": [
+      "Community Reinvestment Act (12 U.S.C. 2901 - 12 CFR Part 25/228):\nCore Purpose: Encourages federally insured depository institutions to help meet the credit needs of the communities in which they are chartered, including low- and moderate-income (LMI) neighborhoods, consistent with safe and sound banking operations.\nEvaluation: Regulators evaluate lending, investment, and service performance."
+    ],
+    "expected_output": "The core purpose of the Community Reinvestment Act (CRA) is to encourage federally insured banks to meet the credit needs of all communities where they operate, specifically including low- and moderate-income (LMI) neighborhoods, consistent with safe and sound banking practices.",
+    "expected_entities": [
+      {"type": "statute", "value": "Community Reinvestment Act"},
+      {"type": "target_communities", "value": "low- and moderate-income"}
+    ],
+    "allowed_topics": ["community_reinvestment", "cra"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "OCC"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-018",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What equity ownership threshold triggers beneficial ownership identification under FinCEN CDD rules?",
+    "context_documents": [
+      "FinCEN Customer Due Diligence (CDD) Rule (31 CFR 1010.230):\nBeneficial Ownership Identification:\nOwnership Prong: Each individual who, directly or indirectly, owns 25% or more of the equity interests of a legal entity customer.\nControl Prong: One individual with significant responsibility to control, manage, or direct the legal entity (e.g. CEO, CFO, Managing Partner)."
+    ],
+    "expected_output": "Under FinCEN's Customer Due Diligence rule, the equity ownership threshold is 25% or more direct or indirect ownership of a legal entity customer. Covered banks must identify and verify all individuals meeting this threshold, plus at least one individual under the control prong.",
+    "expected_entities": [
+      {"type": "regulator", "value": "FinCEN"},
+      {"type": "ownership_threshold", "value": "25%"},
+      {"type": "rule", "value": "Customer Due Diligence"}
+    ],
+    "allowed_topics": ["anti_money_laundering", "beneficial_ownership"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "FinCEN"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-019",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the public disclosure requirement for mortgage lenders under the Home Mortgage Disclosure Act (HMDA)?",
+    "context_documents": [
+      "Home Mortgage Disclosure Act (Regulation C - 12 CFR Part 1003):\nPublic Disclosure Obligations:\nRequirement: Covered mortgage lenders must collect and annually report loan application register (LAR) data to the FFIEC and CFPB, including loan pricing, applicant demographic characteristics (race, ethnicity, sex, income), and action taken.\nPublic Notice: Institutions must post a notice in home and branch lobbies indicating that HMDA data is publicly available online."
+    ],
+    "expected_output": "Under HMDA (Regulation C), covered mortgage lenders must annually report their Loan Application Register (LAR) data (including applicant demographics, loan pricing, and approval/denial actions) to regulators and post lobby notices informing the public that this data is available online.",
+    "expected_entities": [
+      {"type": "regulation", "value": "Regulation C"},
+      {"type": "statute", "value": "HMDA"},
+      {"type": "record", "value": "Loan Application Register"}
+    ],
+    "allowed_topics": ["fair_lending", "hmda"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "CFPB"}
+  },
+  {
+    "test_case_id": "TC-SEG-BANK-020",
+    "domain_segment": "retail_banking",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is a bank's obligation when a wire transaction matches an OFAC Specially Designated Nationals (SDN) entry?",
+    "context_documents": [
+      "Office of Foreign Assets Control (OFAC - 31 CFR Part 501):\nSanctions Compliance Obligations:\nMatch on SDN List: If a transaction or account matches an individual or entity on the OFAC Specially Designated Nationals and Blocked Persons list, the financial institution must:\n1. Immediately block (freeze) the funds.\n2. Place funds into an interest-bearing blocked account.\n3. Report the blocked transfer to OFAC within 10 business days."
+    ],
+    "expected_output": "If a transaction matches an entity on the OFAC SDN list, the bank is legally required to immediately freeze/block the funds, place them in a segregated blocked account, and submit a formal blocked property report to OFAC within 10 business days.",
+    "expected_entities": [
+      {"type": "agency", "value": "OFAC"},
+      {"type": "action", "value": "block"},
+      {"type": "reporting_timeline", "value": "10 business days"}
+    ],
+    "allowed_topics": ["sanctions", "ofac", "wire_transfers"],
+    "metadata": {"segment": "retail_banking_compliance", "regulator": "Treasury"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-001",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does the 'Insured Contract' exception work under the CGL Contractual Liability exclusion?",
+    "context_documents": [
+      "Commercial General Liability Form CG 00 01 (Contractual Liability Exclusion):\nExclusion: Bodily injury or property damage for which the insured is obligated to pay damages by reason of the assumption of liability in a contract or agreement.\nException: Does not apply to liability assumed in an 'insured contract' (including lease of premises, sidetrack agreements, easement agreements, elevator maintenance, and indemnity tort obligations assumed prior to injury)."
+    ],
+    "expected_output": "Under the CGL policy, while the contractual liability exclusion bars coverage for assumed liabilities, the 'insured contract' exception restores coverage for standard commercial indemnity tort assumptions (such as building leases, easement agreements, and standard subcontractor indemnity provisions).",
+    "expected_entities": [
+      {"type": "policy_form", "value": "CG 00 01"},
+      {"type": "exclusion", "value": "Contractual Liability"},
+      {"type": "exception", "value": "insured contract"}
+    ],
+    "allowed_topics": ["commercial_general_liability", "contractual_liability"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-002",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the coverage difference between Additional Insured endorsements CG 20 10 and CG 20 37?",
+    "context_documents": [
+      "ISO Additional Insured Endorsement Comparison:\nCG 20 10 (Owners, Lessees or Contractors - Scheduled Person): Provides coverage for liability arising out of the named insured's ongoing operations performed for the additional insured.\nCG 20 37 (Completed Operations): Extends additional insured status to liability arising out of the products-completed operations hazard after the work has been finished."
+    ],
+    "expected_output": "CG 20 10 provides coverage to the additional insured solely for liability arising out of ongoing operations while work is underway. CG 20 37 extends coverage for completed operations claims arising after the project has been finished.",
+    "expected_entities": [
+      {"type": "endorsement", "value": "CG 20 10"},
+      {"type": "endorsement", "value": "CG 20 37"},
+      {"type": "scope", "value": "ongoing operations"},
+      {"type": "scope", "value": "completed operations"}
+    ],
+    "allowed_topics": ["additional_insured", "construction_risk"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-003",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the legal effect of a Waiver of Subrogation endorsement (CG 24 04) on an insurer?",
+    "context_documents": [
+      "ISO Endorsement CG 24 04 (Transfer of Rights of Recovery Against Others To Us):\nEffect: The insurer agrees to waive any right of recovery (subrogation) against the specific person or organization named in the schedule, provided the named insured has agreed to waive such rights in a written contract executed prior to the loss."
+    ],
+    "expected_output": "The Waiver of Subrogation endorsement prevents the insurer from stepping into the insured's shoes to sue or recover paid claim damages from a scheduled third party (such as a project owner or general contractor), honoring pre-loss contractual indemnity waivers.",
+    "expected_entities": [
+      {"type": "endorsement", "value": "CG 24 04"},
+      {"type": "legal_doctrine", "value": "subrogation"}
+    ],
+    "allowed_topics": ["subrogation", "waivers"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-004",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "Why do commercial enterprises require Hired and Non-Owned Auto Liability (HNOA) coverage?",
+    "context_documents": [
+      "Commercial Auto Form CA 00 01 (Symbols 8 & 9):\nHired Auto Liability (Symbol 8): Protects the business if a rented or hired vehicle causes third-party bodily injury or property damage.\nNon-Owned Auto Liability (Symbol 9): Protects the business against vicarious liability when employees use their personal vehicles for company business (e.g., running errands, visiting client sites)."
+    ],
+    "expected_output": "Enterprises require HNOA coverage to protect against vicarious liability when employees drive personal vehicles on company errands (Non-Owned Auto) or when the business rents or leases vehicles for corporate use (Hired Auto), which are not covered by standard commercial property or CGL policies.",
+    "expected_entities": [
+      {"type": "coverage", "value": "Hired and Non-Owned Auto"},
+      {"type": "symbols", "value": "Symbols 8 & 9"}
+    ],
+    "allowed_topics": ["commercial_auto", "hnoa"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-005",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What expenses are covered under a Builders Risk Soft Costs endorsement?",
+    "context_documents": [
+      "Builders Risk Coverage Form (CP 00 20 - Soft Costs Endorsement):\nCoverage: Reimburses indirect economic financial losses resulting from construction delays caused by a covered physical peril (e.g. fire, storm).\nCovered Items: Additional construction loan interest, extended real estate property taxes, architectural and engineering fees, legal fees, and re-leasing marketing expenses."
+    ],
+    "expected_output": "A Builders Risk Soft Costs endorsement covers indirect financial expenses caused by project construction delays following a covered loss, including extra construction loan interest, extended property taxes, architectural/engineering fees, legal fees, and marketing costs.",
+    "expected_entities": [
+      {"type": "policy_type", "value": "Builders Risk"},
+      {"type": "covered_cost", "value": "construction loan interest"},
+      {"type": "covered_cost", "value": "architectural and engineering fees"}
+    ],
+    "allowed_topics": ["builders_risk", "soft_costs"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-006",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How is a commercial property coinsurance penalty calculated if a building is underinsured?",
+    "context_documents": [
+      "ISO Commercial Property Conditions (CP 00 90 - Coinsurance):\nFormula:\nRecovery = [(Amount of Insurance Carried) / (Amount of Insurance Required)] x Loss - Deductible\nWhere Amount of Insurance Required = Value of Property at Time of Loss x Coinsurance Percentage (e.g., 80% or 90%).\nPenalty: The policyholder becomes a co-insurer and absorbs the resulting deficit."
+    ],
+    "expected_output": "The coinsurance penalty formula is: Recovery = [(Did / Should) x Loss] - Deductible, where 'Did' is the actual limit carried, and 'Should' is the property's replacement value multiplied by the coinsurance percentage (e.g. 80%). If underinsured, the payout is reduced proportionately.",
+    "expected_entities": [
+      {"type": "formula", "value": "(Did / Should) x Loss"},
+      {"type": "clause", "value": "Coinsurance"}
+    ],
+    "allowed_topics": ["commercial_property", "coinsurance_formula"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-007",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the difference between sudden & accidental pollution carve-backs and dedicated Environmental Impairment Liability (EIL)?",
+    "context_documents": [
+      "Commercial Environmental Underwriting:\nCGL Pollution Exclusion (f): Broadly excludes bodily injury and property damage from pollutants.\nSudden & Accidental Carve-back: Exception restoring limited coverage only if discharge commences abruptly and is detected/reported within a narrow statutory window (e.g., 72 hours to 30 days).\nEnvironmental Impairment Liability (EIL): Dedicated policy providing comprehensive affirmative coverage for both gradual seepage/leaks and sudden releases, including on-site and off-site remediation costs."
+    ],
+    "expected_output": "A sudden & accidental CGL carve-back only covers unexpected pollution releases detected and reported within tight timeframes (e.g., 72 hours). In contrast, dedicated EIL insurance covers both gradual long-term contamination and sudden incidents, including government-mandated site cleanup costs.",
+    "expected_entities": [
+      {"type": "coverage", "value": "Environmental Impairment Liability"},
+      {"type": "scope", "value": "gradual seepage"},
+      {"type": "scope", "value": "sudden & accidental"}
+    ],
+    "allowed_topics": ["pollution_liability", "environmental_impairment"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-008",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "Why is a 'Severability of the Application' clause crucial in Directors & Officers (D&O) liability?",
+    "context_documents": [
+      "D&O Policy Construction (Severability Provisions):\nDefinition: Prevents the knowledge or intentional misrepresentations of one executive on the insurance application from being imputed to other innocent directors and officers.\nEffect: The insurer cannot rescind the policy or deny coverage to innocent executives if another officer engaged in financial fraud or committed material omissions on the application."
+    ],
+    "expected_output": "The Severability of the Application clause ensures that fraudulent misrepresentations or omissions made by one executive on the policy application cannot be imputed to innocent colleagues, preventing the insurer from rescinding coverage for directors who had no knowledge of the misstatement.",
+    "expected_entities": [
+      {"type": "clause", "value": "Severability of the Application"},
+      {"type": "policy_type", "value": "D&O"}
+    ],
+    "allowed_topics": ["directors_and_officers", "severability"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-009",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does Commercial Crime insurance distinguish between Employee Dishonesty and Computer Fraud?",
+    "context_documents": [
+      "Commercial Crime Policy Form (CR 00 20):\nInsuring Agreement 1 (Employee Theft): Covers direct loss of money, securities, and other property resulting directly from theft committed by an employee.\nInsuring Agreement 6 (Computer Fraud): Covers loss of property resulting directly from unauthorized entry into or change within a computer system operated by an outside hacker/third party."
+    ],
+    "expected_output": "Commercial Crime policies distinguish Employee Theft (internal theft of funds or inventory by an employee acting alone or in collusion) from Computer Fraud (unauthorized digital infiltration or alteration of computer systems executed by external third-party actors).",
+    "expected_entities": [
+      {"type": "insuring_agreement", "value": "Employee Theft"},
+      {"type": "insuring_agreement", "value": "Computer Fraud"}
+    ],
+    "allowed_topics": ["commercial_crime", "employee_theft"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-010",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the difference between Motor Truck Cargo legal liability and Contingent Cargo insurance for freight brokers?",
+    "context_documents": [
+      "Inland Marine Transportation Forms:\nMotor Truck Cargo (Carrier's Legal Liability): Directly covers the motor carrier for physical loss or damage to cargo in transit for which the trucker is legally liable under a bill of lading.\nContingent Cargo (Freight Broker): Protects the freight broker if the hired underlying motor carrier's primary cargo insurer denies a valid claim or has lapsed coverage."
+    ],
+    "expected_output": "Motor Truck Cargo directly covers the actual carrier transporting the freight under its bill of lading legal liability. Contingent Cargo is purchased by freight brokers to provide backup coverage in case the hired motor carrier's primary insurance denies the cargo claim or has lapsed.",
+    "expected_entities": [
+      {"type": "coverage", "value": "Motor Truck Cargo"},
+      {"type": "coverage", "value": "Contingent Cargo"},
+      {"type": "role", "value": "freight broker"}
+    ],
+    "allowed_topics": ["inland_marine", "cargo_insurance"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-011",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does maritime law treat a 'General Average' contribution under Ocean Marine cargo policies?",
+    "context_documents": [
+      "Ocean Marine Cargo Insurance (York-Antwerp Rules):\nGeneral Average: Legal principle of maritime law where all cargo owners and vessel owners proportionally share in financial sacrifices made voluntarily to preserve the ship and cargo in an emergency (e.g. jettisoning containers to prevent sinking).\nPolicy Coverage: Standard open marine cargo policies affirmatively indemnify the cargo owner's assessed General Average contribution."
+    ],
+    "expected_output": "Under maritime law, General Average requires all cargo interests and vessel owners to contribute proportionally to cover extraordinary sacrifices or expenses voluntarily incurred to save the vessel and voyage (such as jettisoning cargo). Ocean Marine cargo insurance covers this assessed contribution.",
+    "expected_entities": [
+      {"type": "legal_doctrine", "value": "General Average"},
+      {"type": "rules", "value": "York-Antwerp Rules"}
+    ],
+    "allowed_topics": ["ocean_marine", "general_average"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-012",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "When does a Commercial Umbrella policy 'drop down' over underlying insurance limits?",
+    "context_documents": [
+      "Commercial Umbrella Policy (CU 00 01):\nDrop Down Provisions:\n1. Exhaustion of Underlying Aggregate Limits: Umbrella drops down to pay as primary insurance once underlying primary aggregates (CGL, auto, employers liability) are exhausted by paid losses.\n2. Defense Drop Down: Provides first-dollar defense (often subject to a Self-Insured Retention / SIR) for claims covered under umbrella terms but excluded by underlying primary policies."
+    ],
+    "expected_output": "A Commercial Umbrella policy drops down when: (1) Underlying primary aggregate policy limits have been completely exhausted by paid judgments or settlements, or (2) The umbrella policy covers an incident that is broader in scope than the underlying policy, subject to a Self-Insured Retention (SIR).",
+    "expected_entities": [
+      {"type": "policy_type", "value": "Commercial Umbrella"},
+      {"type": "trigger", "value": "exhaustion of aggregate limits"},
+      {"type": "term", "value": "Self-Insured Retention"}
+    ],
+    "allowed_topics": ["umbrella_insurance", "drop_down_coverage"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-013",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What does a Third-Party Discrimination endorsement cover in an Employment Practices Liability (EPLI) policy?",
+    "context_documents": [
+      "Employment Practices Liability Insurance (EPL 00 01):\nStandard Form Scope: Covers claims brought by current, former, or prospective employees alleging harassment, wrongful termination, or discrimination.\nThird-Party Endorsement: Extends affirmative coverage to lawsuits brought by non-employees (customers, clients, vendors) alleging harassment or discrimination by the insured's personnel."
+    ],
+    "expected_output": "While standard EPLI policies only cover lawsuits from employees, a Third-Party Discrimination endorsement extends coverage to claims brought by external customers, clients, or vendors alleging discrimination or harassment by company employees.",
+    "expected_entities": [
+      {"type": "endorsement", "value": "Third-Party Discrimination"},
+      {"type": "policy_type", "value": "EPLI"},
+      {"type": "claimants", "value": "customers, clients, vendors"}
+    ],
+    "allowed_topics": ["epli", "third_party_discrimination"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-014",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does an 'Agreed Value' optional coverage endorsement affect commercial property coinsurance?",
+    "context_documents": [
+      "ISO Commercial Property Form CP 00 10 (Optional Coverage - Agreed Value):\nEffect: The coinsurance condition is completely suspended while the Agreed Value endorsement is in effect.\nRequirement: Named insured must submit an annual Statement of Values (SOV) showing 100% of property value, approved by the underwriter."
+    ],
+    "expected_output": "The Agreed Value endorsement completely suspends the coinsurance condition, eliminating the risk of a coinsurance penalty in exchange for the insured submitting an underwriter-approved annual Statement of Values (SOV).",
+    "expected_entities": [
+      {"type": "endorsement", "value": "Agreed Value"},
+      {"type": "effect", "value": "coinsurance suspended"},
+      {"type": "requirement", "value": "Statement of Values"}
+    ],
+    "allowed_topics": ["commercial_property", "agreed_value"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-015",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the difference between Funds Transfer Fraud and Social Engineering Fraud in cyber insurance?",
+    "context_documents": [
+      "Cyber & Crime Underwriting Definitions:\nFunds Transfer Fraud: Third-party hacker gains unauthorized digital access to bank credentials and initiates an illegal electronic transfer without human authorization.\nSocial Engineering Fraud: An employee is duped through deceptive spoofed emails or executive impersonation (BEC) into willingly authorizing and transmitting funds to a fraudulent account (often subject to lower sublimits and strict dual-verification warranties)."
+    ],
+    "expected_output": "Funds Transfer Fraud involves an unauthorized hacker directly breaching banking systems to steal funds electronically. Social Engineering (Business Email Compromise) involves tricking an authorized employee through deceptive communication into willingly sending funds to an imposter.",
+    "expected_entities": [
+      {"type": "coverage", "value": "Funds Transfer Fraud"},
+      {"type": "coverage", "value": "Social Engineering Fraud"},
+      {"type": "distinction", "value": "employee deception vs system breach"}
+    ],
+    "allowed_topics": ["cyber_insurance", "social_engineering"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-016",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does a 'Hammer Clause' (Settlement Opportunity clause) operate in Professional Liability policies?",
+    "context_documents": [
+      "Professional Liability / E&O Policy Terms:\nHammer Clause (Consent to Settle Provision):\nRule: If the insurer recommends a settlement agreeable to the claimant, but the insured refuses consent and elects to continue litigating, the insurer's liability is capped at the recommended settlement amount plus defense costs incurred up to the date of refusal.\nSoft Hammer: Insurer pays the settlement amount plus a percentage (e.g., 50% or 70%) of excess defense/settlement costs."
+    ],
+    "expected_output": "A Hammer Clause limits the insurer's financial obligation if the policyholder rejects a recommended settlement. If the insured refuses to settle, the insurer will only pay up to the rejected settlement amount plus defense costs incurred to that point, leaving subsequent costs to the insured.",
+    "expected_entities": [
+      {"type": "clause", "value": "Hammer Clause"},
+      {"type": "policy_type", "value": "Professional Liability"}
+    ],
+    "allowed_topics": ["professional_liability", "hammer_clause"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-017",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What notice period is required for cancellation of a commercial package policy due to non-payment of premium?",
+    "context_documents": [
+      "Common Policy Conditions (IL 00 17 - Cancellation):\nNon-Payment of Premium: The insurer may cancel by mailing or delivering written notice of cancellation to the first Named Insured at least 10 days before effective date.\nOther Reasons (Material Misrepresentation, Substantial Change in Risk): At least 30 to 60 days advance written notice depending on state statutory requirements."
+    ],
+    "expected_output": "Under standard commercial package conditions (IL 00 17), the insurer must provide at least 10 days advance written notice to cancel for non-payment of premium (compared to 30 to 60 days for other allowable reasons).",
+    "expected_entities": [
+      {"type": "notice_period", "value": "10 days"},
+      {"type": "reason", "value": "non-payment of premium"},
+      {"type": "form", "value": "IL 00 17"}
+    ],
+    "allowed_topics": ["commercial_package", "cancellation_provisions"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-018",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does an employer's Experience Modification Factor (E-Mod) impact Workers' Compensation premium?",
+    "context_documents": [
+      "Workers' Compensation Rating Bureau (NCCI Guidelines):\nExperience Modification Factor (E-Mod):\nBaseline Benchmark: 1.00 (average expected loss performance for industry risk class).\nE-Mod < 1.00: Credit mod (e.g. 0.85 = 15% discount on manual premium) reflecting superior safety record.\nE-Mod > 1.00: Debit mod (e.g. 1.25 = 25% premium surcharge) reflecting higher frequency or severity of workplace injuries."
+    ],
+    "expected_output": "An employer's Experience Modification Factor (E-Mod) directly scales workers' compensation manual premiums based on their 3-year loss history. An E-Mod of 1.00 is average, an E-Mod below 1.00 gives a premium discount (credit), and an E-Mod above 1.00 imposes a premium surcharge (debit).",
+    "expected_entities": [
+      {"type": "benchmark", "value": "1.00"},
+      {"type": "rating_tool", "value": "Experience Modification Factor"},
+      {"type": "organization", "value": "NCCI"}
+    ],
+    "allowed_topics": ["workers_compensation", "experience_modification"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-019",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "What is the key difference between a 'Following Form' excess liability policy and a standalone excess policy?",
+    "context_documents": [
+      "Excess Liability Coverage Structures:\nFollowing Form Excess: Adopts all terms, exclusions, warranties, and conditions of the underlying primary policy exactly, providing identical coverage above the primary limits.\nStandalone Excess: Contains its own independent policy jacket, definitions, and unique exclusions, meaning it may not cover every peril or risk that the primary policy covers."
+    ],
+    "expected_output": "A Following Form excess policy adopts the exact terms, definitions, and exclusions of the underlying primary policy. In contrast, a Standalone excess policy contains its own unique terms and exclusions, which may be more restrictive than the primary policy.",
+    "expected_entities": [
+      {"type": "coverage_type", "value": "Following Form"},
+      {"type": "coverage_type", "value": "Standalone Excess"}
+    ],
+    "allowed_topics": ["excess_liability", "policy_structure"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  },
+  {
+    "test_case_id": "TC-SEG-INS-020",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "segment_specific",
+    "priority": "P1",
+    "input_prompt": "How does a proportional Quota Share reinsurance treaty operate between a ceding insurer and a reinsurer?",
+    "context_documents": [
+      "Reinsurance Principles & Treaties:\nQuota Share Treaty: Proportional treaty where the primary ceding insurer and reinsurer agree to share premiums and losses according to a fixed predetermined percentage (e.g., 60% ceded, 40% retained).\nCeding Commission: Reinsurer pays the ceding company an agreed percentage to cover original policy acquisition and administrative costs."
+    ],
+    "expected_output": "In a proportional Quota Share reinsurance treaty, the ceding insurer and reinsurer divide all policy premiums and loss liabilities according to a fixed percentage (e.g., 60% ceded to reinsurer, 40% retained by primary insurer). The reinsurer typically pays a ceding commission to reimburse acquisition expenses.",
+    "expected_entities": [
+      {"type": "treaty_type", "value": "Quota Share"},
+      {"type": "compensation", "value": "ceding commission"}
+    ],
+    "allowed_topics": ["reinsurance", "quota_share"],
+    "metadata": {"segment": "commercial_insurance_underwriting"}
+  }
+]

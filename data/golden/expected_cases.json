@@ -1,0 +1,864 @@
+[
+  {
+    "test_case_id": "TC-EXP-BANK-001",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my current available balance on checking account ending in 4102?",
+    "context_documents": [
+      "Customer: Eleanor Vance (CUST-8831)\nAccount: Premier Checking (Acct: 9871234102)\nCurrent Ledger Balance: $4,850.25\nAvailable Balance: $4,650.25\nPending Debit Holds: $200.00 (Apex Gas Station)"
+    ],
+    "expected_output": "Your available balance on Premier Checking ending in 4102 is $4,650.25. (Current ledger balance is $4,850.25 with $200.00 in pending holds).",
+    "expected_entities": [
+      {"type": "account_number", "value": "4102"},
+      {"type": "available_balance", "value": "$4,650.25"},
+      {"type": "ledger_balance", "value": "$4,850.25"}
+    ],
+    "allowed_topics": ["balance_inquiry", "checking_account"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-002",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the annual percentage yield (APY) on my Platinum Savings account?",
+    "context_documents": [
+      "Customer: Marcus Brody (CUST-1049)\nAccount: Platinum Savings (Acct: 4410982311)\nCurrent Balance: $28,450.00\nCurrent Interest Rate: 4.15%\nAnnual Percentage Yield (APY): 4.25%\nCompounding Frequency: Daily, credited monthly"
+    ],
+    "expected_output": "The Annual Percentage Yield (APY) on your Platinum Savings account ending in 2311 is 4.25% (interest rate: 4.15%), compounded daily and credited monthly.",
+    "expected_entities": [
+      {"type": "account_number", "value": "2311"},
+      {"type": "apy", "value": "4.25%"},
+      {"type": "interest_rate", "value": "4.15%"}
+    ],
+    "allowed_topics": ["savings_account", "interest_rate"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-003",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Can you summarize my last 3 transactions on my primary checking account?",
+    "context_documents": [
+      "Account: Everyday Checking (Acct: 5543110098)\nRecent Transactions:\n1. 2026-10-31: Whole Foods Market -$84.20 (Debit Card)\n2. 2026-10-30: Employer Payroll Direct Deposit +$2,450.00 (ACH Credit)\n3. 2026-10-29: City Water & Utility Bill -$65.40 (Bill Pay)"
+    ],
+    "expected_output": "Here are your last 3 transactions on Everyday Checking ending in 0098:\n1. Oct 31, 2026: Whole Foods Market for -$84.20 (Debit Card)\n2. Oct 30, 2026: Payroll Direct Deposit for +$2,450.00 (ACH Credit)\n3. Oct 29, 2026: City Water & Utility Bill for -$65.40 (Bill Pay)",
+    "expected_entities": [
+      {"type": "transaction_amount", "value": "-$84.20"},
+      {"type": "transaction_amount", "value": "+$2,450.00"},
+      {"type": "transaction_amount", "value": "-$65.40"}
+    ],
+    "allowed_topics": ["transaction_history", "checking_account"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-004",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the daily outgoing domestic wire transfer limit and cutoff time?",
+    "context_documents": [
+      "BDIPlus Retail Wire Policy:\nDomestic Outgoing Wire Daily Limit: $50,000.00 per customer for standard online banking.\nCutoff Time: 4:30 PM EST on business days.\nProcessing Fee: $25.00 for online submission."
+    ],
+    "expected_output": "The daily outgoing domestic wire transfer limit for online banking is $50,000.00. The same-day processing cutoff time is 4:30 PM EST on business days, with a $25.00 online processing fee.",
+    "expected_entities": [
+      {"type": "limit_amount", "value": "$50,000.00"},
+      {"type": "cutoff_time", "value": "4:30 PM EST"},
+      {"type": "fee", "value": "$25.00"}
+    ],
+    "allowed_topics": ["wire_transfers", "limits"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-005",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What routing number should I use for setting up direct deposit with my employer?",
+    "context_documents": [
+      "Bank Routing Info:\nBDIPlus Federal Savings Bank\nDirect Deposit / Electronic ACH Routing Number (ABA): 021000089\nDomestic Wire Routing Number: 021000092\nBranch: New York Main Office"
+    ],
+    "expected_output": "For direct deposit (electronic ACH), use routing number (ABA) 021000089. Please note that wire transfers use a different routing number (021000092).",
+    "expected_entities": [
+      {"type": "routing_number", "value": "021000089"}
+    ],
+    "allowed_topics": ["routing_numbers", "direct_deposit"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-006",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Why is there a pending hold of $75.00 from Shell Oil on my debit card?",
+    "context_documents": [
+      "Cardholder Account: 3349\nPending Authorizations:\n- Date: 2026-11-01\n- Merchant: Shell Oil 4812\n- Amount: $75.00 (Pre-authorization hold for fuel pump)\nPolicy: Automated fuel dispensers place an authorization hold ($50-$100) until the final fuel transaction settles within 24-48 hours."
+    ],
+    "expected_output": "The $75.00 pending hold from Shell Oil is a standard pre-authorization hold placed by gas station pumps to verify funds. Once your final fuel charge settles (typically within 24–48 hours), the hold will adjust to your exact purchase amount.",
+    "expected_entities": [
+      {"type": "merchant", "value": "Shell Oil"},
+      {"type": "hold_amount", "value": "$75.00"}
+    ],
+    "allowed_topics": ["debit_card", "pending_authorizations"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-007",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Does my account reimburse out-of-network ATM fees?",
+    "context_documents": [
+      "Account Tier: Advantage Preferred Checking\nATM Fee Policy:\n- Unlimited free transactions at 55,000+ Allpoint ATM network locations.\n- Out-of-network domestic ATM surcharge reimbursement up to $15.00 per statement cycle, credited on statement closing date."
+    ],
+    "expected_output": "Yes, your Advantage Preferred Checking account reimburses domestic out-of-network ATM fees up to $15.00 per statement cycle, credited on your statement closing date. You also have free access to over 55,000 Allpoint network ATMs.",
+    "expected_entities": [
+      {"type": "reimbursement_cap", "value": "$15.00"}
+    ],
+    "allowed_topics": ["atm_fees", "checking_account"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-008",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "When does my 12-month Certificate of Deposit mature and what is the early withdrawal penalty?",
+    "context_documents": [
+      "Account: 12-Month Fixed CD (Acct: 88124901)\nOpen Date: 2025-12-15\nMaturity Date: 2026-12-15\nPrincipal: $10,000.00\nAPY: 4.50%\nEarly Withdrawal Penalty: 90 days of simple interest on the amount withdrawn.\nGrace Period: 10 calendar days post-maturity."
+    ],
+    "expected_output": "Your 12-month CD matures on December 15, 2026. The early withdrawal penalty is 90 days of simple interest on the withdrawn amount. You will have a 10-calendar-day grace period after maturity to renew or withdraw funds.",
+    "expected_entities": [
+      {"type": "maturity_date", "value": "2026-12-15"},
+      {"type": "penalty_duration", "value": "90 days"}
+    ],
+    "allowed_topics": ["certificate_of_deposit", "maturity"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-009",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my credit card minimum payment due and the payment due date?",
+    "context_documents": [
+      "Credit Card: Cash Rewards Visa Signature (Card: 7721)\nStatement Balance: $1,420.50\nMinimum Payment Due: $35.00\nPayment Due Date: November 24, 2026\nAPR for Purchases: 19.99% variable"
+    ],
+    "expected_output": "Your minimum payment due is $35.00, and the payment due date is November 24, 2026 (statement balance: $1,420.50).",
+    "expected_entities": [
+      {"type": "minimum_payment", "value": "$35.00"},
+      {"type": "due_date", "value": "November 24, 2026"}
+    ],
+    "allowed_topics": ["credit_cards", "payments"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-010",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my total credit limit and remaining available credit?",
+    "context_documents": [
+      "Credit Card: Cash Rewards Visa Signature (Card: 7721)\nCredit Limit: $10,000.00\nCurrent Balance: $1,420.50\nPending Transactions: $150.00\nAvailable Credit: $8,429.50"
+    ],
+    "expected_output": "Your total credit limit is $10,000.00, and your remaining available credit is $8,429.50 (with a current balance of $1,420.50 and $150.00 in pending transactions).",
+    "expected_entities": [
+      {"type": "credit_limit", "value": "$10,000.00"},
+      {"type": "available_credit", "value": "$8,429.50"}
+    ],
+    "allowed_topics": ["credit_cards", "available_credit"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-011",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my daily debit card purchase limit?",
+    "context_documents": [
+      "Customer: David Kim\nCard: Visa Debit (Ending in 1894)\nDaily POS Purchase Limit: $3,000.00\nDaily ATM Cash Withdrawal Limit: $1,000.00\nDaily Contactless Tap Limit without PIN: $100.00"
+    ],
+    "expected_output": "Your daily debit card point-of-sale (POS) purchase limit is $3,000.00. (Your daily ATM cash withdrawal limit is $1,000.00).",
+    "expected_entities": [
+      {"type": "purchase_limit", "value": "$3,000.00"},
+      {"type": "atm_limit", "value": "$1,000.00"}
+    ],
+    "allowed_topics": ["debit_card", "spending_limits"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-012",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How much does it cost to place a stop payment on a paper check?",
+    "context_documents": [
+      "Fee Schedule 2026:\nStop Payment Request (Online / Mobile Banking): $15.00 per check\nStop Payment Request (Phone / In-Branch): $30.00 per check\nValidity Duration: 6 months (renewable upon request)"
+    ],
+    "expected_output": "Placing a stop payment costs $15.00 when requested through online or mobile banking, or $30.00 if requested over the phone or in-branch. The stop payment order remains active for 6 months.",
+    "expected_entities": [
+      {"type": "online_fee", "value": "$15.00"},
+      {"type": "branch_fee", "value": "$30.00"},
+      {"type": "duration", "value": "6 months"}
+    ],
+    "allowed_topics": ["check_services", "fees"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-013",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How does overdraft protection transfer work if my checking account runs out of money?",
+    "context_documents": [
+      "Overdraft Services Disclosure:\nEnrolled Account: Everyday Checking linked to Platinum Savings.\nTransfer Increments: Exact amount needed in $50.00 increments.\nTransfer Fee: $0.00 (Free overdraft savings link).\nDaily Cap: Maximum 6 savings transfer debits per month."
+    ],
+    "expected_output": "Your overdraft protection automatically transfers funds from your linked Platinum Savings account in $50.00 increments to cover negative checking balances. There is no transfer fee ($0.00), subject to a monthly limit of 6 savings transfers.",
+    "expected_entities": [
+      {"type": "increment", "value": "$50.00"},
+      {"type": "fee", "value": "$0.00"}
+    ],
+    "allowed_topics": ["overdraft", "savings_link"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-014",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my auto loan 10-day payoff quote?",
+    "context_documents": [
+      "Loan Account: 48-Month Auto Loan (Acct: AUTO-99120)\nVehicle: 2024 Honda CR-V\nPrincipal Balance: $14,200.00\nAccrued Unpaid Interest: $42.50\nPer Diem Interest Rate: $1.85/day\n10-Day Payoff Amount (Valid thru 2026-11-12): $14,261.00"
+    ],
+    "expected_output": "Your 10-day auto loan payoff quote is $14,261.00 (valid through November 12, 2026). This includes your principal balance of $14,200.00, accrued interest of $42.50, and 10 days of per diem interest at $1.85/day.",
+    "expected_entities": [
+      {"type": "payoff_amount", "value": "$14,261.00"},
+      {"type": "per_diem", "value": "$1.85/day"}
+    ],
+    "allowed_topics": ["auto_loans", "payoff_quote"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-015",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my mortgage escrow balance and when is the next county property tax payment due?",
+    "context_documents": [
+      "Mortgage Loan: 30-Year Fixed (Acct: MTG-339811)\nEscrow Account Balance: $3,840.50\nUpcoming Disbursements:\n- Travis County Property Tax: $2,450.00 due on December 10, 2026\n- Hazard Insurance Annual Premium: $1,150.00 due on February 15, 2027"
+    ],
+    "expected_output": "Your current mortgage escrow balance is $3,840.50. The next disbursement is your Travis County property tax payment of $2,450.00, due on December 10, 2026.",
+    "expected_entities": [
+      {"type": "escrow_balance", "value": "$3,840.50"},
+      {"type": "tax_amount", "value": "$2,450.00"},
+      {"type": "due_date", "value": "December 10, 2026"}
+    ],
+    "allowed_topics": ["mortgage", "escrow"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-016",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What are the fees for sending an international wire transfer in Euros?",
+    "context_documents": [
+      "International Wire Policy:\nOutgoing International Wire (FX Currency - EUR): $15.00 transfer fee\nOutgoing International Wire (US Dollars): $45.00 transfer fee\nFX Conversion Spread: 1.25% above mid-market rate\nProcessing Time: 1-3 international business days"
+    ],
+    "expected_output": "Sending an international wire in Euros (foreign currency) incurs a $15.00 transfer fee plus a 1.25% foreign exchange spread above the mid-market rate. (If sent in US Dollars, the fee is $45.00). Processing takes 1–3 business days.",
+    "expected_entities": [
+      {"type": "fx_fee", "value": "$15.00"},
+      {"type": "usd_fee", "value": "$45.00"},
+      {"type": "fx_spread", "value": "1.25%"}
+    ],
+    "allowed_topics": ["international_wire", "fx_fees"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-017",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Who is listed as the secondary authorized signer on my joint checking account?",
+    "context_documents": [
+      "Account: Joint Premier Checking (Acct: 78190012)\nPrimary Owner: Samuel Jenkins (SSN: ***-**-4491)\nSecondary Authorized Signer: Claire Jenkins (SSN: ***-**-1102)\nAccount Authority: Joint with Right of Survivorship (JTWROS)"
+    ],
+    "expected_output": "Claire Jenkins is listed as the secondary authorized signer on your joint checking account (JTWROS) ending in 0012.",
+    "expected_entities": [
+      {"type": "secondary_signer", "value": "Claire Jenkins"},
+      {"type": "account_type", "value": "Joint with Right of Survivorship"}
+    ],
+    "allowed_topics": ["joint_accounts", "authorized_signers"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-018",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the minimum opening balance and monthly maintenance fee for High-Yield Savings?",
+    "context_documents": [
+      "Deposit Account Disclosures:\nHigh-Yield Online Savings Account\nMinimum Opening Deposit: $100.00\nMonthly Maintenance Fee: $0.00 (No monthly fee regardless of balance)\nMinimum Balance to Earn APY: $0.01"
+    ],
+    "expected_output": "The minimum opening deposit for the High-Yield Online Savings account is $100.00. There is no monthly maintenance fee ($0.00), and you earn the advertised APY on any balance of $0.01 or more.",
+    "expected_entities": [
+      {"type": "minimum_opening", "value": "$100.00"},
+      {"type": "monthly_fee", "value": "$0.00"}
+    ],
+    "allowed_topics": ["savings_account", "fees"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-019",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Did my Netflix recurring subscription charge clear this month?",
+    "context_documents": [
+      "Account: Everyday Checking (Acct: 9940)\nRecurring Merchant History:\n- 2026-10-18: Netflix.com -$19.99 (Posted)\n- 2026-09-18: Netflix.com -$19.99 (Posted)\n- 2026-08-18: Netflix.com -$19.99 (Posted)"
+    ],
+    "expected_output": "Yes, your recurring Netflix subscription charge of $19.99 cleared and posted to your account on October 18, 2026.",
+    "expected_entities": [
+      {"type": "merchant", "value": "Netflix.com"},
+      {"type": "amount", "value": "$19.99"},
+      {"type": "date", "value": "2026-10-18"}
+    ],
+    "allowed_topics": ["recurring_charges", "subscriptions"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-020",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my current credit card rewards points balance and cash redemption value?",
+    "context_documents": [
+      "Rewards Program: BDIPlus Apex Rewards\nMember: CUST-8831\nAvailable Points Balance: 42,500 points\nCash Back Redemption Rate: 1 point = $0.01 (1.0 cent)\nTotal Cash Equivalent: $425.00\nExpiring Points: 0 points expiring in next 90 days"
+    ],
+    "expected_output": "You have 42,500 available rewards points, which have a cash back redemption value of $425.00 (at 1 point = $0.01). None of your points are expiring in the next 90 days.",
+    "expected_entities": [
+      {"type": "points_balance", "value": "42,500"},
+      {"type": "cash_value", "value": "$425.00"}
+    ],
+    "allowed_topics": ["credit_cards", "rewards_program"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-021",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How long will it take to receive a replacement debit card via standard shipping?",
+    "context_documents": [
+      "Card Services Delivery Standards:\nStandard Shipping (USPS First Class): 5 to 7 business days (Free / $0.00)\nExpedited Rush Delivery (FedEx 2-Day): 2 business days ($15.00 fee)\nDigital Card Provisioning: Available immediately via Apple Pay and Google Wallet in mobile app."
+    ],
+    "expected_output": "Standard shipping takes 5 to 7 business days and is free ($0.00). If needed sooner, expedited 2-day delivery is available for $15.00. You can also activate a digital replacement card immediately in Apple Pay or Google Wallet.",
+    "expected_entities": [
+      {"type": "standard_delivery", "value": "5 to 7 business days"},
+      {"type": "standard_cost", "value": "Free"}
+    ],
+    "allowed_topics": ["debit_card", "replacement_card"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-022",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How does early direct deposit work on my checking account?",
+    "context_documents": [
+      "Direct Deposit Features:\nEarly Direct Deposit: Automatically enabled for eligible electronic payroll and government ACH deposits.\nTiming: Funds are credited up to 2 business days early, immediately upon receiving the payer's advance notification file from the Federal Reserve.\nCost: $0.00 / Free."
+    ],
+    "expected_output": "Early direct deposit is automatically enabled on your account at no cost ($0.00). It makes your paycheck available up to 2 business days early as soon as your employer's payroll file is received from the Federal Reserve.",
+    "expected_entities": [
+      {"type": "early_window", "value": "2 business days early"},
+      {"type": "cost", "value": "$0.00"}
+    ],
+    "allowed_topics": ["direct_deposit", "early_pay"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-023",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What are the requirements to waive the monthly fee on Student Checking?",
+    "context_documents": [
+      "Product: College Student Checking\nStandard Monthly Maintenance Fee: $6.00\nWaiver Criteria (Meet any one):\n1. Primary account holder is enrolled in college or university and age 17-24.\n2. Maintain a minimum daily balance of $500.00.\n3. Have at least one qualifying direct deposit of $250.00 or more per statement cycle."
+    ],
+    "expected_output": "The $6.00 monthly fee on Student Checking is waived if you meet any of the following: (1) You are an enrolled student aged 17–24, (2) You maintain a $500.00 minimum daily balance, or (3) You receive at least one qualifying direct deposit of $250.00+ per statement cycle.",
+    "expected_entities": [
+      {"type": "fee", "value": "$6.00"},
+      {"type": "age_range", "value": "17-24"},
+      {"type": "balance_threshold", "value": "$500.00"}
+    ],
+    "allowed_topics": ["student_checking", "fee_waivers"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-024",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How do I get a cashier's check and what is the fee?",
+    "context_documents": [
+      "Branch Official Check Services:\nCashier's Check / Official Bank Check\nFee: $10.00 per check (Free for Premier Checking customers)\nIssuance: Available in-branch at any teller station with valid government ID.\nOnline Ordering: Can be requested online for home delivery with 3-5 day transit."
+    ],
+    "expected_output": "Cashier's checks can be issued at any branch teller station with a valid government photo ID, or ordered online for home delivery. The fee is $10.00 per check (or free if you hold a Premier Checking account).",
+    "expected_entities": [
+      {"type": "standard_fee", "value": "$10.00"},
+      {"type": "waiver_tier", "value": "Premier Checking"}
+    ],
+    "allowed_topics": ["cashiers_check", "branch_services"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-BANK-025",
+    "domain_segment": "retail_banking",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the foreign transaction fee on my debit card when traveling in Europe?",
+    "context_documents": [
+      "Debit Card Terms:\nCard: BDIPlus Mastercard Debit\nForeign Transaction Fee: 3.0% of the converted transaction amount in US Dollars for purchases made outside the United States or in foreign currencies.\nATM Foreign Currency Fee: $3.00 + 3.0% FX conversion."
+    ],
+    "expected_output": "The foreign transaction fee on your debit card is 3.0% of the converted US Dollar amount for purchases made abroad or in foreign currencies. For foreign ATM withdrawals, the fee is $3.00 plus the 3.0% conversion fee.",
+    "expected_entities": [
+      {"type": "foreign_transaction_fee", "value": "3.0%"},
+      {"type": "atm_foreign_fee", "value": "$3.00"}
+    ],
+    "allowed_topics": ["debit_card", "travel_fees"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-001",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the difference between my collision and comprehensive auto coverage deductibles?",
+    "context_documents": [
+      "Auto Policy: PA-990231 (Vehicle: 2023 Tesla Model Y)\nCollision Coverage: $1,000.00 deductible per occurrence (covers impact with another vehicle or object).\nComprehensive Coverage: $500.00 deductible per occurrence (covers theft, vandalism, weather, hail, and animal strikes)."
+    ],
+    "expected_output": "Your collision deductible is $1,000.00 per occurrence (covering physical damage from vehicular impacts or collisions), while your comprehensive deductible is $500.00 per occurrence (covering theft, vandalism, hail, fire, or animal strikes).",
+    "expected_entities": [
+      {"type": "collision_deductible", "value": "$1,000.00"},
+      {"type": "comprehensive_deductible", "value": "$500.00"}
+    ],
+    "allowed_topics": ["auto_insurance", "deductibles"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-002",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my current homeowners dwelling coverage limit (Coverage A)?",
+    "context_documents": [
+      "Homeowners Policy: HO3-441209 (Property: 742 Evergreen Terr, Austin TX)\nCoverage A (Dwelling): $450,000.00\nCoverage B (Other Structures): $45,000.00 (10% of A)\nCoverage C (Personal Property): $225,000.00 (50% of A)\nCoverage D (Loss of Use): $90,000.00 (20% of A)\nPolicy Deductible: $1,500.00 standard, 2% Wind/Hail"
+    ],
+    "expected_output": "Your homeowners dwelling coverage limit (Coverage A) is $450,000.00. (Other structures: $45,000.00; Personal property: $225,000.00; Loss of use: $90,000.00).",
+    "expected_entities": [
+      {"type": "dwelling_limit", "value": "$450,000.00"},
+      {"type": "policy_type", "value": "HO3"}
+    ],
+    "allowed_topics": ["homeowners_insurance", "dwelling_coverage"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-003",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How much has been applied toward my annual in-network health insurance deductible?",
+    "context_documents": [
+      "Health Plan: Choice POS Bronze Plus (Member: MBR-19044)\nIndividual Annual In-Network Deductible: $3,000.00\nAmount Satisfied to Date: $1,850.00\nRemaining Deductible: $1,150.00\nIndividual Out-of-Pocket Maximum: $6,500.00"
+    ],
+    "expected_output": "You have satisfied $1,850.00 of your $3,000.00 annual in-network individual deductible, leaving $1,150.00 remaining for the policy year.",
+    "expected_entities": [
+      {"type": "deductible_total", "value": "$3,000.00"},
+      {"type": "deductible_satisfied", "value": "$1,850.00"},
+      {"type": "deductible_remaining", "value": "$1,150.00"}
+    ],
+    "allowed_topics": ["health_insurance", "deductibles"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-004",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the maximum towing distance covered under my roadside assistance?",
+    "context_documents": [
+      "Roadside Assistance Endorsement (Policy: PA-104992)\nCoverage Tier: Premium Roadside Assistance\nTowing Limit: Up to 25 miles to the nearest qualified repair facility per breakdown.\nService Calls Limit: 4 service calls per covered vehicle per policy term.\nIncludes: Flat tire change, battery jump-start, lockout service up to $100, and fuel delivery (2 gallons)."
+    ],
+    "expected_output": "Your Premium Roadside Assistance covers towing up to 25 miles to the nearest qualified repair facility per breakdown, with up to 4 service calls per policy term.",
+    "expected_entities": [
+      {"type": "towing_distance", "value": "25 miles"},
+      {"type": "service_call_limit", "value": "4 service calls"}
+    ],
+    "allowed_topics": ["roadside_assistance", "towing"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-005",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is our Commercial General Liability policy per-occurrence and aggregate limit?",
+    "context_documents": [
+      "Commercial Policy: CGL-881200\nNamed Insured: Apex Data Solutions LLC\nGeneral Aggregate Limit: $2,000,000.00\nProducts/Completed Operations Aggregate: $2,000,000.00\nEach Occurrence Limit: $1,000,000.00\nPersonal & Advertising Injury: $1,000,000.00\nDamage to Rented Premises: $300,000.00"
+    ],
+    "expected_output": "Your Commercial General Liability policy has an Each Occurrence limit of $1,000,000.00 and a General Aggregate limit of $2,000,000.00 (with $2,000,000.00 for Products/Completed Operations).",
+    "expected_entities": [
+      {"type": "occurrence_limit", "value": "$1,000,000.00"},
+      {"type": "aggregate_limit", "value": "$2,000,000.00"}
+    ],
+    "allowed_topics": ["commercial_insurance", "liability_limits"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-006",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the waiting period for workers' compensation lost wage benefits in California?",
+    "context_documents": [
+      "Workers' Compensation Guidelines (California Jurisdiction):\nWaiting Period: 3 calendar days of disability before temporary disability indemnity benefits begin.\nRetroactive Provision: If the disability lasts 14 consecutive days or requires hospitalization, indemnity is paid retroactively for the initial 3 days.\nStatutory Wage Replacement Rate: 66 2/3% (two-thirds) of average weekly earnings subject to statutory state minimums and maximums."
+    ],
+    "expected_output": "In California, there is a 3-calendar-day waiting period before workers' compensation temporary disability benefits begin. However, if the disability lasts 14 or more days or requires hospitalization, benefits are paid retroactively for those first 3 days. Wage replacement is two-thirds (66 2/3%) of average weekly wages.",
+    "expected_entities": [
+      {"type": "waiting_period", "value": "3 calendar days"},
+      {"type": "retroactive_threshold", "value": "14 consecutive days"},
+      {"type": "replacement_rate", "value": "66 2/3%"}
+    ],
+    "allowed_topics": ["workers_compensation", "wage_replacement"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-007",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the death benefit and remaining term on my level term life insurance policy?",
+    "context_documents": [
+      "Policy: 20-Year Level Term Life (Policy: TL-449100)\nInsured: Robert Sterling (DOB: 1986-04-12)\nDeath Benefit: $750,000.00\nIssue Date: 2016-05-01\nExpiration Date: 2036-05-01\nRemaining Term: 9 years and 6 months\nAnnual Premium: $640.00 guaranteed level"
+    ],
+    "expected_output": "Your 20-year term life policy provides a $750,000.00 death benefit. The policy is guaranteed through May 1, 2036, with approximately 9 years and 6 months remaining on your level term.",
+    "expected_entities": [
+      {"type": "death_benefit", "value": "$750,000.00"},
+      {"type": "expiration_date", "value": "2036-05-01"}
+    ],
+    "allowed_topics": ["life_insurance", "term_life"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-008",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the annual reimbursement limit and coinsurance rate for my pet insurance policy?",
+    "context_documents": [
+      "Pet Health Policy: PAWS-9921 (Pet: Luna, Golden Retriever)\nAnnual Benefit Maximum: $10,000.00\nReimbursement Rate (Coinsurance): 80% of eligible veterinary charges\nAnnual Deductible: $250.00\nIncludes: Illness, accidents, emergency surgeries, hereditary conditions."
+    ],
+    "expected_output": "Your pet insurance policy has an annual reimbursement maximum of $10,000.00 with an 80% reimbursement rate on eligible veterinary costs (after your $250.00 annual deductible).",
+    "expected_entities": [
+      {"type": "annual_maximum", "value": "$10,000.00"},
+      {"type": "reimbursement_rate", "value": "80%"},
+      {"type": "deductible", "value": "$250.00"}
+    ],
+    "allowed_topics": ["pet_insurance", "reimbursement"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-009",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the sublimit for stolen jewelry under my renters insurance policy?",
+    "context_documents": [
+      "Renters Policy: HO4-110293\nPersonal Property Limit: $35,000.00\nSpecial Limits of Liability for Theft:\n- Jewelry, watches, and precious furs: $1,500.00 aggregate sublimit\n- Firearms and accessories: $2,500.00 sublimit\n- Silverware and goldware: $2,500.00 sublimit\nOptional Scheduled Personal Property Floater: None on file."
+    ],
+    "expected_output": "Under your standard renters policy, theft of jewelry, watches, and precious furs is subject to a special sublimit of $1,500.00 in the aggregate. Higher limits require adding a scheduled personal property floater.",
+    "expected_entities": [
+      {"type": "jewelry_sublimit", "value": "$1,500.00"},
+      {"type": "policy_type", "value": "HO4"}
+    ],
+    "allowed_topics": ["renters_insurance", "special_sublimits"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-010",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Does my auto insurance policy include a zero-deductible glass repair waiver?",
+    "context_documents": [
+      "Policy: PA-449102 (Endorsement: Full Glass Safety Waiver)\nComprehensive Deductible: $500.00\nGlass Endorsement: Zero-deductible ($0.00) glass repair or replacement for safety windshields, windows, and side mirrors.\nApproved Vendors: Safelite AutoGlass and certified mobile network technicians."
+    ],
+    "expected_output": "Yes, your auto policy includes the Full Glass Safety Waiver endorsement, providing zero-deductible ($0.00) repair or replacement for windshields, windows, and mirrors through approved network glass technicians.",
+    "expected_entities": [
+      {"type": "glass_deductible", "value": "$0.00"},
+      {"type": "endorsement", "value": "Full Glass Safety Waiver"}
+    ],
+    "allowed_topics": ["auto_insurance", "glass_coverage"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-011",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What are the minimum underlying auto liability limits required for my personal umbrella policy?",
+    "context_documents": [
+      "Personal Umbrella Policy: PUP-7721 (Limit: $1,000,000.00)\nRequired Minimum Underlying Auto Limits:\n- Bodily Injury Liability: $250,000 per person / $500,000 per occurrence\n- Property Damage Liability: $100,000 per occurrence\nRequired Minimum Underlying Homeowners Liability: $300,000 personal liability"
+    ],
+    "expected_output": "Your umbrella policy requires underlying auto liability coverage of at least $250,000 bodily injury per person, $500,000 bodily injury per occurrence, and $100,000 property damage per occurrence.",
+    "expected_entities": [
+      {"type": "bodily_injury_person", "value": "$250,000"},
+      {"type": "bodily_injury_occurrence", "value": "$500,000"},
+      {"type": "property_damage", "value": "$100,000"}
+    ],
+    "allowed_topics": ["umbrella_insurance", "underlying_limits"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-012",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Why is there a 30-day waiting period on newly purchased flood insurance policies?",
+    "context_documents": [
+      "National Flood Insurance Program (NFIP) Guidelines:\nStandard Waiting Period: 30 calendar days from application date before coverage becomes effective.\nPurpose: Prevents policyholders from purchasing insurance only when a severe flood threat is immediately approaching.\nExceptions: No waiting period if required for closing on a federally backed mortgage loan."
+    ],
+    "expected_output": "The 30-day waiting period on NFIP flood insurance prevents purchasing coverage only when an active flood threat is approaching. A key exception is when coverage is required for closing on a federally backed mortgage loan, in which case it becomes effective immediately.",
+    "expected_entities": [
+      {"type": "waiting_period", "value": "30 calendar days"}
+    ],
+    "allowed_topics": ["flood_insurance", "waiting_period"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-013",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is our corporate cyber insurance policy limit for ransomware and cyber extortion?",
+    "context_documents": [
+      "Commercial Cyber Policy: CYB-30911\nNamed Insured: Meridian Data Systems Corp\nAggregate Cyber Limit: $5,000,000.00\nSublimit: Cyber Extortion & Ransomware: $2,500,000.00 per claim\nRetention: $50,000.00 each incident\nRequirements: Mandatory engagement of pre-approved incident response breach counsel."
+    ],
+    "expected_output": "Your corporate cyber policy provides a sublimit of $2,500,000.00 per claim for ransomware and cyber extortion (subject to a $50,000.00 retention). Pre-approved breach counsel must be engaged.",
+    "expected_entities": [
+      {"type": "extortion_sublimit", "value": "$2,500,000.00"},
+      {"type": "retention", "value": "$50,000.00"}
+    ],
+    "allowed_topics": ["cyber_insurance", "ransomware"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-014",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the business interruption indemnity period on our commercial property policy?",
+    "context_documents": [
+      "Commercial Property Policy: CP-88310\nBusiness Income & Extra Expense Coverage Form (CP 00 30)\nPeriod of Restoration: Maximum 12 consecutive months following direct physical loss or damage by a covered peril.\nWaiting Period: 72 hours before business income loss calculation commences."
+    ],
+    "expected_output": "Your business interruption coverage provides an indemnity period of up to 12 consecutive months of actual loss sustained during the period of restoration, subject to a 72-hour waiting period.",
+    "expected_entities": [
+      {"type": "period_of_restoration", "value": "12 consecutive months"},
+      {"type": "waiting_period", "value": "72 hours"}
+    ],
+    "allowed_topics": ["commercial_property", "business_interruption"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-015",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What coinsurance percentage applies to preventative dental exams under my dental plan?",
+    "context_documents": [
+      "Dental Plan: Delta Premier Plan 100/80/50\nCoverage Breakdown:\n- Class I (Preventative & Diagnostic: cleanings, exams, bitewing x-rays): 100% covered (0% patient coinsurance, deductible waived)\n- Class II (Basic: fillings, simple extractions): 80% coverage\n- Class III (Major: crowns, root canals): 50% coverage\nAnnual Maximum: $1,500.00 per member"
+    ],
+    "expected_output": "Preventative dental exams and cleanings (Class I) are covered at 100% with 0% patient coinsurance, and the deductible is waived.",
+    "expected_entities": [
+      {"type": "preventative_coverage", "value": "100%"},
+      {"type": "patient_coinsurance", "value": "0%"}
+    ],
+    "allowed_topics": ["dental_insurance", "preventative_care"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-016",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the annual frame allowance on my vision insurance plan?",
+    "context_documents": [
+      "Vision Plan: Vision Advantage Plus\nAnnual WellVision Exam: $10.00 copay\nPrescription Glasses:\n- Frame Allowance: $150.00 allowance every calendar year, plus 20% discount off remaining balance.\n- Standard Single Vision Lenses: $25.00 copay\n- Contact Lens Allowance: $150.00 in lieu of glasses."
+    ],
+    "expected_output": "Your vision plan provides a $150.00 frame allowance every calendar year, plus a 20% discount on any remaining balance above $150.00.",
+    "expected_entities": [
+      {"type": "frame_allowance", "value": "$150.00"},
+      {"type": "exam_copay", "value": "$10.00"}
+    ],
+    "allowed_topics": ["vision_insurance", "benefits"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-017",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "How soon after an auto collision must I file an insurance claim?",
+    "context_documents": [
+      "Auto Policy Conditions (Part E - Duties After an Accident):\nNotification: The policyholder must report the loss promptly, as soon as reasonably possible (standard recommendation within 24-48 hours).\nProof of Loss: Formal sworn proof of loss must be filed within 60 days of the company's request."
+    ],
+    "expected_output": "You should report the collision promptly as soon as reasonably possible, ideally within 24–48 hours of the accident. If a formal sworn proof of loss is requested, it must be submitted within 60 days.",
+    "expected_entities": [
+      {"type": "reporting_timeline", "value": "within 24-48 hours"},
+      {"type": "proof_of_loss", "value": "60 days"}
+    ],
+    "allowed_topics": ["claims", "filing_deadlines"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-018",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the daily rental car reimbursement limit under my auto policy?",
+    "context_documents": [
+      "Auto Endorsement: Transportation Expenses / Rental Reimbursement\nPolicy: PA-990231\nDaily Limit: Up to $40.00 per day\nMaximum Policy Period Limit: $1,200.00 (maximum 30 days of rental)\nEligibility: Applies while covered vehicle is inoperable due to a covered comprehensive or collision loss."
+    ],
+    "expected_output": "Your rental car reimbursement coverage provides up to $40.00 per day, with a maximum of $1,200.00 (up to 30 days) while your vehicle is being repaired from a covered loss.",
+    "expected_entities": [
+      {"type": "daily_rental_limit", "value": "$40.00 per day"},
+      {"type": "max_rental_limit", "value": "$1,200.00"},
+      {"type": "max_days", "value": "30 days"}
+    ],
+    "allowed_topics": ["auto_insurance", "rental_reimbursement"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-019",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "Are legal defense costs included within or in addition to my homeowners personal liability limit?",
+    "context_documents": [
+      "Homeowners Form HO-3 (Section II - Liability Coverages)\nCoverage E (Personal Liability): $300,000 per occurrence\nLegal Defense: The insurer provides legal defense counsel at its own expense by counsel of its choice.\nDefense Costs Treatment: Defense costs are paid outside and in addition to the $300,000 policy limit until the policy limits are exhausted by settlement or judgment."
+    ],
+    "expected_output": "Under your homeowners policy, legal defense costs are paid in addition to (outside) your $300,000 personal liability limit. Legal defense expenses do not reduce your available coverage limit.",
+    "expected_entities": [
+      {"type": "liability_limit", "value": "$300,000"},
+      {"type": "defense_costs", "value": "in addition to"}
+    ],
+    "allowed_topics": ["homeowners_insurance", "personal_liability"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-020",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the retroactive date on our Errors & Omissions (E&O) professional liability policy?",
+    "context_documents": [
+      "Policy: E&O Professional Liability (Policy: EO-55102)\nClaims-Made Coverage Form\nNamed Insured: Horizon Software Architects LLC\nRetroactive Date: January 1, 2021\nPolicy Period: January 1, 2026 to January 1, 2027\nPolicy Condition: Excludes wrongful acts, errors, or omissions committed prior to the retroactive date."
+    ],
+    "expected_output": "The retroactive date on your E&O professional liability policy is January 1, 2021. Any alleged wrongful acts or professional errors committed prior to this date are excluded from coverage.",
+    "expected_entities": [
+      {"type": "retroactive_date", "value": "January 1, 2021"},
+      {"type": "coverage_trigger", "value": "Claims-Made"}
+    ],
+    "allowed_topics": ["professional_liability", "retroactive_date"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-021",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is my individual annual maximum out-of-pocket (MOOP) threshold for health insurance?",
+    "context_documents": [
+      "Health Benefit Plan: Choice POS Silver (Member: MBR-19044)\nIndividual Annual In-Network Deductible: $2,500.00\nIndividual Annual Maximum Out-of-Pocket (MOOP): $6,500.00\nFamily Annual MOOP: $13,000.00\nApplies to: In-network copays, deductibles, and coinsurance for essential health benefits."
+    ],
+    "expected_output": "Your individual annual maximum out-of-pocket (MOOP) threshold is $6,500.00 (family MOOP is $13,000.00). Once you reach this amount in a calendar year, covered in-network essential health benefits are paid at 100%.",
+    "expected_entities": [
+      {"type": "individual_moop", "value": "$6,500.00"},
+      {"type": "family_moop", "value": "$13,000.00"}
+    ],
+    "allowed_topics": ["health_insurance", "out_of_pocket_maximum"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-022",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is covered under our commercial inland marine contractor equipment floater?",
+    "context_documents": [
+      "Commercial Policy: IM-9021\nInland Marine Contractor Equipment Floater\nTotal Scheduled Equipment Limit: $350,000.00\nUnscheduled Tool Limit: $2,500 per tool / $25,000 aggregate\nCovered Perils: Open perils including collision in transit, theft from job site, overturn, and fire.\nDeductible: $1,000 per occurrence."
+    ],
+    "expected_output": "Your contractor equipment floater covers scheduled mobile equipment up to $350,000.00, and unscheduled tools up to $2,500 per item ($25,000 aggregate) against transit collision, job site theft, overturn, and fire, subject to a $1,000 deductible.",
+    "expected_entities": [
+      {"type": "scheduled_limit", "value": "$350,000.00"},
+      {"type": "unscheduled_limit", "value": "$25,000"},
+      {"type": "deductible", "value": "$1,000"}
+    ],
+    "allowed_topics": ["inland_marine", "contractor_equipment"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-023",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What is the elimination period for long-term disability benefits under our corporate plan?",
+    "context_documents": [
+      "Group Disability Plan: LTD-2041\nBenefit: 60% of pre-disability monthly earnings up to $7,500/month\nElimination Period: 90 consecutive calendar days of continuous total disability\nMaximum Benefit Period: To Social Security Normal Retirement Age (SSNRA)"
+    ],
+    "expected_output": "The elimination period for long-term disability is 90 consecutive calendar days of continuous disability before monthly benefit payments begin (covering 60% of earnings up to $7,500/month).",
+    "expected_entities": [
+      {"type": "elimination_period", "value": "90 consecutive calendar days"},
+      {"type": "benefit_percentage", "value": "60%"}
+    ],
+    "allowed_topics": ["disability_insurance", "elimination_period"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-024",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What reasons are covered for trip cancellation under my travel insurance policy?",
+    "context_documents": [
+      "Travel Protection Plan: TRV-8812\nTrip Cost: $4,200.00\nTrip Cancellation Coverage: 100% of non-refundable insured trip payments\nCovered Reasons:\n1. Unforeseen illness, injury, or death of traveler or immediate family member.\n2. Primary residence made uninhabitable by natural disaster or fire.\n3. Common carrier strike or documented severe weather cessation of flights for 24+ hours.\n4. Required jury duty summons."
+    ],
+    "expected_output": "Covered reasons for trip cancellation include: (1) Unforeseen illness, injury, or death of the traveler or immediate family member, (2) Primary residence rendered uninhabitable by disaster or fire, (3) Common carrier airline shutdown for 24+ hours due to weather or strike, and (4) Subpoena or jury duty summons.",
+    "expected_entities": [
+      {"type": "cancellation_coverage", "value": "100%"},
+      {"type": "trip_cost", "value": "$4,200.00"}
+    ],
+    "allowed_topics": ["travel_insurance", "trip_cancellation"],
+    "metadata": {"channel": "mobile_app", "difficulty": "standard"}
+  },
+  {
+    "test_case_id": "TC-EXP-INS-025",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "expected",
+    "priority": "P1",
+    "input_prompt": "What does Side A coverage protect under our Directors & Officers (D&O) liability policy?",
+    "context_documents": [
+      "Policy: D&O Corporate Liability (Policy: DO-6019)\nSide A Coverage (Individual Executive Protection): $5,000,000.00 aggregate limit with $0 deductible.\nTrigger: Direct defense and indemnification for individual directors and officers when the corporation cannot or is legally prohibited from indemnifying them (e.g. corporate insolvency or shareholder derivative suits)."
+    ],
+    "expected_output": "Side A coverage directly indemnifies and defends individual directors and officers when the corporation is legally prohibited or financially unable to do so (such as during corporate insolvency or in shareholder derivative suits). It carries a $0 deductible.",
+    "expected_entities": [
+      {"type": "side_a_limit", "value": "$5,000,000.00"},
+      {"type": "deductible", "value": "$0"}
+    ],
+    "allowed_topics": ["d_and_o_insurance", "side_a_coverage"],
+    "metadata": {"channel": "web_chat", "difficulty": "standard"}
+  }
+]

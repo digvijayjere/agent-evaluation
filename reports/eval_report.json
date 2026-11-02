@@ -1,0 +1,133 @@
+{
+  "gate_enabled": true,
+  "gate_passed": false,
+  "exit_code": 1,
+  "status": "FAIL",
+  "violations": [
+    "F1 regression: dropped by 100.00% (exceeds allowable 3.0% tolerance)"
+  ],
+  "comparison": {
+    "overall_status": "FAIL",
+    "gate_approved": false,
+    "metric_deltas": {
+      "f1_score": {
+        "metric_name": "F1 Score",
+        "baseline_value": 0.94,
+        "candidate_value": 0.0,
+        "absolute_delta": -0.94,
+        "relative_percent_delta": -100.0,
+        "status": "FAIL",
+        "threshold_applied": "Relative drop <= 3.0%",
+        "message": "F1 relative change is -100.00%"
+      },
+      "precision": {
+        "metric_name": "Precision",
+        "baseline_value": 0.95,
+        "candidate_value": 1.0,
+        "absolute_delta": 0.05,
+        "relative_percent_delta": 5.26,
+        "status": "PASS",
+        "threshold_applied": "Relative drop <= 3.0%",
+        "message": "Precision relative change is +5.26%"
+      },
+      "faithfulness_avg": {
+        "metric_name": "Faithfulness (Anti-Hallucination)",
+        "baseline_value": 4.85,
+        "candidate_value": 5.0,
+        "absolute_delta": 0.15,
+        "relative_percent_delta": 3.09,
+        "status": "PASS",
+        "threshold_applied": "Floor >= 4.50, drop <= 0.15",
+        "message": "Faithfulness absolute delta is +0.15 pts"
+      },
+      "adversarial_refusal_rate": {
+        "metric_name": "Adversarial Refusal Rate",
+        "baseline_value": 1.0,
+        "candidate_value": 1.0,
+        "absolute_delta": 0.0,
+        "relative_percent_delta": 0.0,
+        "status": "PASS",
+        "threshold_applied": "Refusal == 100.0%",
+        "message": "Adversarial refusal rate is 100.0%"
+      },
+      "latency_p95": {
+        "metric_name": "Latency p95",
+        "baseline_value": 145.0,
+        "candidate_value": 180.0,
+        "absolute_delta": 35.0,
+        "relative_percent_delta": 24.14,
+        "status": "PASS",
+        "threshold_applied": "Increase <= 25%",
+        "message": "Latency p95 changed by +24.1%"
+      }
+    },
+    "critical_violations": [
+      "F1 regression: dropped by 100.00% (exceeds allowable 3.0% tolerance)"
+    ],
+    "candidate_summary": {
+      "total_cases": 50,
+      "passed_cases": 50,
+      "failed_cases": 0,
+      "f1_score": 0.0,
+      "precision": 1.0,
+      "recall": 0.0,
+      "exact_match": 0.0,
+      "faithfulness_avg": 5.0,
+      "relevance_avg": 5.0,
+      "constraint_adherence_avg": 5.0,
+      "adversarial_refusal_rate": 1.0,
+      "latency_p50": 180.0,
+      "latency_p95": 180.0,
+      "latency_p99": 180.0,
+      "metadata": {
+        "agent_endpoint": "mock://regressed"
+      }
+    },
+    "baseline_summary": {
+      "total_cases": 150,
+      "passed_cases": 150,
+      "failed_cases": 0,
+      "f1_score": 0.94,
+      "precision": 0.95,
+      "recall": 0.93,
+      "exact_match": 0.9,
+      "faithfulness_avg": 4.85,
+      "relevance_avg": 4.88,
+      "constraint_adherence_avg": 4.95,
+      "adversarial_refusal_rate": 1.0,
+      "latency_p50": 120.0,
+      "latency_p95": 145.0,
+      "latency_p99": 180.0,
+      "metadata": {
+        "benchmark_suite": "BDIPlus Golden Benchmark Suite v1",
+        "domains": [
+          "retail_banking",
+          "insurance_claims"
+        ],
+        "timestamp": "2026-11-01T00:00:00Z",
+        "agent_version": "cdp-agent-v1.0-stable",
+        "evaluator_version": "1.0.0"
+      }
+    }
+  },
+  "candidate_summary": {
+    "total_cases": 50,
+    "passed_cases": 50,
+    "failed_cases": 0,
+    "f1_score": 0.0,
+    "precision": 1.0,
+    "recall": 0.0,
+    "exact_match": 0.0,
+    "faithfulness_avg": 5.0,
+    "relevance_avg": 5.0,
+    "constraint_adherence_avg": 5.0,
+    "adversarial_refusal_rate": 1.0,
+    "latency_p50": 180.0,
+    "latency_p95": 180.0,
+    "latency_p99": 180.0,
+    "metadata": {
+      "agent_endpoint": "mock://regressed"
+    }
+  },
+  "summary_text": "RELEASE BLOCKED: 1 gating rule violation(s) detected."
+}

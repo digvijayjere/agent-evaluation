@@ -1,0 +1,5 @@
+# BDIPlus-AgentEval-Hub: Authoritative SHA-256 Checksums for Golden Datasets
+be2b5081aa20ce46696101cd838c560aff62c42eb87dc26eef1ca89a557f8832  adversarial_cases.json
+73a27861ac3d8c12d82e48ccda876799c9d45181a19008293f8de8b52c264e3a  degraded_cases.json
+1818a9bf16c39f87499897f7e5ce402adc95ff42a501c26d4f588d265a869fe1  expected_cases.json
+3224591b7765a051a28e197d6dad7b8940b238c6b3c92500e1da93e0d035d25c  segment_cases.json

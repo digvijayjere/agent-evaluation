@@ -1,0 +1,510 @@
+[
+  {
+    "test_case_id": "TC-DEG-001",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What is my account balance?",
+    "context_documents": [
+      "Customer: Marcus Vance (CUST-9021)\nAccounts On File:\n1. Everyday Checking (...3301): $1,420.00\n2. High-Yield Savings (...8822): $15,850.50\n3. Cash Rewards Credit Card (...1190): -$450.00 balance"
+    ],
+    "expected_output": "You have multiple accounts on file. Could you please specify which account you would like the balance for: Everyday Checking (...3301), High-Yield Savings (...8822), or your Cash Rewards Credit Card (...1190)?",
+    "expected_entities": [
+      {"type": "action_required", "value": "clarification_needed"},
+      {"type": "account_count", "value": "3"}
+    ],
+    "allowed_topics": ["balance_inquiry", "clarification"],
+    "metadata": {"degraded_type": "ambiguous_account_selection"}
+  },
+  {
+    "test_case_id": "TC-DEG-002",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "How much is in my checking account ending in 5519?",
+    "context_documents": [
+      "Customer: Sarah Connor (CUST-4091)\nAccount: Checking (...5519)\nAccount Status: ACTIVE\nCurrent Ledger Balance: NULL\nAvailable Balance: NULL\nCore Banking System Status: HOST_CONNECTION_TIMEOUT (ErrorCode: CORE-503)"
+    ],
+    "expected_output": "I am currently unable to retrieve the real-time balance for your checking account ending in 5519 due to a temporary system connectivity delay. Please check back in a few minutes or review your mobile app dashboard.",
+    "expected_entities": [
+      {"type": "error_code", "value": "CORE-503"},
+      {"type": "account_number", "value": "5519"}
+    ],
+    "allowed_topics": ["system_outage", "fallback_response"],
+    "metadata": {"degraded_type": "null_balance_upstream_timeout"}
+  },
+  {
+    "test_case_id": "TC-DEG-003",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Can you show me the transactions on my savings account for last week?",
+    "context_documents": [
+      "Customer: David Miller (CUST-1192)\nAccount: High-Yield Savings (...7710)\nDate Range Queried: 2026-10-24 to 2026-10-31\nTransactions: [] (Empty list, zero posted or pending items)"
+    ],
+    "expected_output": "There were no posted or pending transactions on your High-Yield Savings account ending in 7710 between October 24 and October 31, 2026.",
+    "expected_entities": [
+      {"type": "transaction_count", "value": "0"},
+      {"type": "account_number", "value": "7710"}
+    ],
+    "allowed_topics": ["transaction_history", "empty_results"],
+    "metadata": {"degraded_type": "empty_transaction_list"}
+  },
+  {
+    "test_case_id": "TC-DEG-004",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Why was my card declined when I tried to buy groceries earlier?",
+    "context_documents": [
+      "Customer: Olivia Chen (CUST-7741)\nCard: Visa Debit (...4910)\nAccount Status: RESTRICTED\nDecline Code: SEC-LOCK-FRAUD\nDecline Timestamp: 2026-11-02T14:15:00Z\nReason: Suspicious unusual merchant location triggered temporary security lock."
+    ],
+    "expected_output": "Your debit card ending in 4910 was declined due to a temporary security hold triggered by unusual activity. For your protection, please verify the transaction via the security SMS alert sent to your registered mobile number or call our 24/7 Fraud Prevention team.",
+    "expected_entities": [
+      {"type": "card_number", "value": "4910"},
+      {"type": "decline_reason", "value": "security lock"}
+    ],
+    "allowed_topics": ["card_decline", "fraud_protection"],
+    "metadata": {"degraded_type": "security_lock_decline"}
+  },
+  {
+    "test_case_id": "TC-DEG-005",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Transfer $500 to John right now.",
+    "context_documents": [
+      "Customer: Liam Gallagher (CUST-3310)\nSource Account: Checking (...1029) Balance: $2,800.00\nLinked Payees on File:\n1. John Peterson (Checking ...9901)\n2. Johnathan Smith (Savings ...4412)\n3. Johnny Ramos (Zelle: johnny@email.com)"
+    ],
+    "expected_output": "You have multiple payees matching 'John'. Which recipient would you like to transfer $500 to: John Peterson (...9901), Johnathan Smith (...4412), or Johnny Ramos (Zelle)?",
+    "expected_entities": [
+      {"type": "transfer_amount", "value": "$500"},
+      {"type": "action_required", "value": "recipient_disambiguation"}
+    ],
+    "allowed_topics": ["funds_transfer", "payee_disambiguation"],
+    "metadata": {"degraded_type": "ambiguous_recipient"}
+  },
+  {
+    "test_case_id": "TC-DEG-006",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What is the status of my wire transfer with confirmation reference W-UNKNOWN?",
+    "context_documents": [
+      "Customer: Arthur Dent (CUST-4200)\nWire Reference Searched: W-UNKNOWN\nQuery Result: No wire transfer found matching tracking reference 'W-UNKNOWN'.\nRecent Outgoing Wires on File:\n- Ref: W-881902 dated 2026-10-28 to Barclay Bank ($12,400.00 - Status: COMPLETED)"
+    ],
+    "expected_output": "I could not find any wire transfer matching reference 'W-UNKNOWN'. Your most recent outgoing wire was reference W-881902 for $12,400.00 on October 28, 2026 (Completed). Please double-check your tracking reference number.",
+    "expected_entities": [
+      {"type": "invalid_reference", "value": "W-UNKNOWN"},
+      {"type": "recent_valid_reference", "value": "W-881902"}
+    ],
+    "allowed_topics": ["wire_transfers", "lookup_not_found"],
+    "metadata": {"degraded_type": "invalid_reference_code"}
+  },
+  {
+    "test_case_id": "TC-DEG-007",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "When will my deposited check clear? Here is the date: 2026-99-99.",
+    "context_documents": [
+      "Customer Deposit Record: CUST-8810\nCheck Deposit: Mobile Remote Deposit\nDeposit Date String in payload: '2026-99-99T12:00:00Z' (Corrupted Date Record)\nCheck Amount: $1,250.00\nStandard Hold Policy: Funds up to $225 available next business day, remainder in 2 business days."
+    ],
+    "expected_output": "The deposit record displays an unformatted date. Under our standard check availability policy, the first $225.00 of a mobile check deposit is available the next business day, and the remaining funds clear within 2 business days.",
+    "expected_entities": [
+      {"type": "immediate_availability", "value": "$225"},
+      {"type": "standard_hold", "value": "2 business days"}
+    ],
+    "allowed_topics": ["check_holds", "corrupted_timestamp"],
+    "metadata": {"degraded_type": "corrupted_date_format"}
+  },
+  {
+    "test_case_id": "TC-DEG-008",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Can you pay my mortgage bill?",
+    "context_documents": [
+      "Customer: Rebecca Ferguson (CUST-6621)\nLinked Accounts:\n1. Checking (...4410): $3,100.00\n2. Visa Credit Card (...8891): $1,200.00 limit\nMortgage Records on File: NONE (No mortgage or loan account found for this customer profile)."
+    ],
+    "expected_output": "You do not currently have a mortgage account linked to your profile. If you have a mortgage with another lender, you can set them up as an external payee through our Bill Pay service.",
+    "expected_entities": [
+      {"type": "account_status", "value": "no_mortgage_on_file"}
+    ],
+    "allowed_topics": ["bill_pay", "missing_account_category"],
+    "metadata": {"degraded_type": "missing_account_type"}
+  },
+  {
+    "test_case_id": "TC-DEG-009",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What was that $45 charge from yesterday?",
+    "context_documents": [
+      "Customer Account: 2210\nTransactions on 2026-11-01:\n1. 2026-11-01 10:14 AM: Starbucks Coffee -$45.00 (Debit Card)\n2. 2026-11-01 04:30 PM: Chevron Gas Station -$45.00 (Debit Card)"
+    ],
+    "expected_output": "You had two separate $45.00 charges on November 1: one at Starbucks Coffee at 10:14 AM, and another at Chevron Gas Station at 4:30 PM. Which one would you like details on?",
+    "expected_entities": [
+      {"type": "charge_count", "value": "2"},
+      {"type": "amount", "value": "$45.00"}
+    ],
+    "allowed_topics": ["transaction_lookup", "duplicate_amount_disambiguation"],
+    "metadata": {"degraded_type": "duplicate_charge_collision"}
+  },
+  {
+    "test_case_id": "TC-DEG-010",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "How much can I withdraw from the ATM right now with my card ending in 9002?",
+    "context_documents": [
+      "Customer: Frank Castle\nCard: Debit (...9002)\nAccount Balance: $140.00\nDaily ATM Withdrawal Limit: $1,000.00\nWithdrawn Today: $0.00"
+    ],
+    "expected_output": "While your daily ATM withdrawal limit is $1,000.00, your current available account balance is $140.00. Therefore, the maximum you can withdraw right now is $140.00 (in available ATM bill denominations).",
+    "expected_entities": [
+      {"type": "available_balance", "value": "$140.00"},
+      {"type": "daily_limit", "value": "$1,000.00"}
+    ],
+    "allowed_topics": ["atm_withdrawal", "balance_constrained_limit"],
+    "metadata": {"degraded_type": "balance_less_than_limit"}
+  },
+  {
+    "test_case_id": "TC-DEG-011",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What is my auto insurance deductible?",
+    "context_documents": [
+      "Customer: Nathan Drake (CUST-9102)\nPolicies On File:\n1. Auto Policy (PA-1102): 2022 Subaru Outback (Collision: $500, Comp: $250)\n2. Auto Policy (PA-4491): 2024 Ford F-150 (Collision: $1,000, Comp: $500)"
+    ],
+    "expected_output": "You have two auto policies on file. Which vehicle's deductible would you like: the 2022 Subaru Outback (Collision: $500 / Comp: $250) or the 2024 Ford F-150 (Collision: $1,000 / Comp: $500)?",
+    "expected_entities": [
+      {"type": "action_required", "value": "vehicle_disambiguation"},
+      {"type": "vehicle_count", "value": "2"}
+    ],
+    "allowed_topics": ["auto_insurance", "deductible_lookup"],
+    "metadata": {"degraded_type": "multiple_vehicles_unspecified"}
+  },
+  {
+    "test_case_id": "TC-DEG-012",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Is water damage to my finished basement covered under policy HO3-8821?",
+    "context_documents": [
+      "Policy: Homeowners (HO3-8821)\nNamed Insured: Elena Fisher\nEndorsements Attached:\n- Water Backup and Sump Overflow Endorsement (HO 04 95): [CORRUPTED_RECORD / INCOMPLETE_DATA]\n- Standard HO3 Policy Condition: Excludes flood and subsurface groundwater seepage."
+    ],
+    "expected_output": "Standard homeowners policies exclude flood and groundwater seepage. Your records show a Water Backup endorsement on file, but the coverage limit details are currently incomplete in our system. Please contact your agent directly to confirm your water backup endorsement limits.",
+    "expected_entities": [
+      {"type": "policy_number", "value": "HO3-8821"},
+      {"type": "missing_data", "value": "endorsement_limit"}
+    ],
+    "allowed_topics": ["homeowners_insurance", "incomplete_endorsement"],
+    "metadata": {"degraded_type": "corrupted_endorsement_sublimit"}
+  },
+  {
+    "test_case_id": "TC-DEG-013",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What is the status of my claim #CLM-9999?",
+    "context_documents": [
+      "Claims Database Query for 'CLM-9999':\nStatus: NOT_FOUND\nActive Claims for Insured CUST-5510:\n- Claim #CLM-2026-8812: Auto collision filed 2026-10-25 (Status: Under Adjuster Review)"
+    ],
+    "expected_output": "I could not find a claim matching #CLM-9999. However, you have an active claim #CLM-2026-8812 for an auto collision filed on October 25, 2026, which is currently under adjuster review.",
+    "expected_entities": [
+      {"type": "invalid_claim", "value": "CLM-9999"},
+      {"type": "valid_claim", "value": "CLM-2026-8812"},
+      {"type": "claim_status", "value": "Under Adjuster Review"}
+    ],
+    "allowed_topics": ["claims_status", "claim_not_found"],
+    "metadata": {"degraded_type": "unmatched_claim_id"}
+  },
+  {
+    "test_case_id": "TC-DEG-014",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Why was my health claim for Dr. Smith rejected?",
+    "context_documents": [
+      "Health Claim Record: CLM-HLTH-4410\nPatient: Lucas Scott\nProvider: Dr. Robert Smith (Cardiology)\nClaim Total: $420.00\nAdjudication Status: DENIED\nDenial Reason Code: PR-27 (Expenses incurred after coverage terminated or patient ineligible on service date)\nService Date: 2026-09-15\nMember Effective Date: 2026-10-01"
+    ],
+    "expected_output": "Your claim for Dr. Robert Smith ($420.00) was denied because the date of service (September 15, 2026) occurred before your health coverage effective date (October 1, 2026), under denial code PR-27.",
+    "expected_entities": [
+      {"type": "denial_code", "value": "PR-27"},
+      {"type": "service_date", "value": "2026-09-15"},
+      {"type": "effective_date", "value": "2026-10-01"}
+    ],
+    "allowed_topics": ["health_claims", "claim_denial"],
+    "metadata": {"degraded_type": "pre_effective_date_denial"}
+  },
+  {
+    "test_case_id": "TC-DEG-015",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Can I add my new car to my auto policy right now? It's a 2025 BMW.",
+    "context_documents": [
+      "Customer: Victor Sullivan\nPolicy: PA-33012\nRequest: Vehicle Addition\nProvided Information: Year: 2025, Make: BMW\nMissing Mandatory Underwriting Fields: Model, Vehicle Identification Number (VIN), Odometer Reading, Garaging Zip Code."
+    ],
+    "expected_output": "I would be happy to help add your 2025 BMW to your policy. To complete the endorsement, please provide the exact model, the 17-character Vehicle Identification Number (VIN), and the garaging zip code.",
+    "expected_entities": [
+      {"type": "missing_info", "value": "VIN"},
+      {"type": "missing_info", "value": "model"}
+    ],
+    "allowed_topics": ["auto_insurance", "policy_endorsement"],
+    "metadata": {"degraded_type": "incomplete_underwriting_fields"}
+  },
+  {
+    "test_case_id": "TC-DEG-016",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Cancel my insurance policy immediately.",
+    "context_documents": [
+      "Customer: Chloe Frazer (CUST-7721)\nActive Policies On File:\n1. Homeowners Insurance (HO3-1029)\n2. Personal Auto Insurance (PA-4401)\n3. Personal Umbrella Liability (PUP-9921)"
+    ],
+    "expected_output": "You currently hold three active policies with us: Homeowners (HO3-1029), Auto (PA-4401), and Umbrella (PUP-9921). Please clarify which policy you would like to cancel, or if you are requesting cancellation of all policies.",
+    "expected_entities": [
+      {"type": "action_required", "value": "policy_clarification"},
+      {"type": "policy_count", "value": "3"}
+    ],
+    "allowed_topics": ["policy_cancellation", "clarification"],
+    "metadata": {"degraded_type": "blanket_cancellation_request"}
+  },
+  {
+    "test_case_id": "TC-DEG-017",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "When is my insurance payment due?",
+    "context_documents": [
+      "Policy: PA-88210 (Auto Policy)\nBilling Schedule Status: PAID_IN_FULL\nTerm: 2026-06-01 to 2026-12-01\nAnnual Premium: $850.00 (Paid in full on 2026-06-01)\nNext Renewal Due Date: December 1, 2026\nCurrent Outstanding Balance: $0.00"
+    ],
+    "expected_output": "You have no payment currently due because your auto policy was paid in full ($0.00 balance). Your next payment will be for your term renewal on December 1, 2026.",
+    "expected_entities": [
+      {"type": "balance_due", "value": "$0.00"},
+      {"type": "renewal_date", "value": "December 1, 2026"}
+    ],
+    "allowed_topics": ["billing", "paid_in_full"],
+    "metadata": {"degraded_type": "no_current_due_date"}
+  },
+  {
+    "test_case_id": "TC-DEG-018",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What does my policy cover if my business loses power?",
+    "context_documents": [
+      "Commercial Policy: CP-9011 (Named Insured: TechCraft LLC)\nUtility Services Direct Damage Endorsement: NOT ELECTED\nUtility Services Time Element Endorsement: NOT ELECTED\nStandard Policy Form CP 00 10: Explicitly excludes loss caused by failure of power or utility service supplied to described premises if failure occurs outside a covered building."
+    ],
+    "expected_output": "Under your current commercial property policy, off-premises power or utility outages are excluded from coverage because the Utility Services endorsement was not elected.",
+    "expected_entities": [
+      {"type": "coverage_status", "value": "excluded"},
+      {"type": "missing_endorsement", "value": "Utility Services"}
+    ],
+    "allowed_topics": ["commercial_property", "coverage_exclusion"],
+    "metadata": {"degraded_type": "excluded_coverage_inquiry"}
+  },
+  {
+    "test_case_id": "TC-DEG-019",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Who is the primary driver on vehicle #3?",
+    "context_documents": [
+      "Auto Policy: PA-1049\nVehicles Scheduled:\n1. 2023 Honda Civic (Driver: Alice Cooper)\n2. 2021 Toyota RAV4 (Driver: Bob Cooper)\nVehicle 3: NOT FOUND (Policy only lists 2 vehicles)."
+    ],
+    "expected_output": "Your auto policy currently only has two vehicles scheduled (2023 Honda Civic and 2021 Toyota RAV4). There is no third vehicle listed on file.",
+    "expected_entities": [
+      {"type": "scheduled_vehicles", "value": "2"}
+    ],
+    "allowed_topics": ["auto_insurance", "vehicle_schedule"],
+    "metadata": {"degraded_type": "out_of_bounds_index"}
+  },
+  {
+    "test_case_id": "TC-DEG-020",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Is my roof covered if hail caused damage yesterday?",
+    "context_documents": [
+      "Homeowners Policy: HO3-7721\nDwelling Limit: $350,000\nRoof Endorsement Form: Actual Cash Value (ACV) Roof Depreciation Endorsement\nRoof Age: 18 years (Architectural asphalt shingles)\nCondition: Roof damage from wind/hail is paid at Actual Cash Value (depreciated basis), not Replacement Cost."
+    ],
+    "expected_output": "Yes, hail damage to your roof is covered under your policy, but settlement is based on Actual Cash Value (ACV) reflecting depreciation for the 18-year roof age, rather than full replacement cost.",
+    "expected_entities": [
+      {"type": "settlement_type", "value": "Actual Cash Value"},
+      {"type": "peril", "value": "hail"}
+    ],
+    "allowed_topics": ["homeowners_insurance", "roof_depreciation"],
+    "metadata": {"degraded_type": "restrictive_endorsement"}
+  },
+  {
+    "test_case_id": "TC-DEG-021",
+    "domain_segment": "cdp_identity",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Update my mailing address to 100 Main St, Chicago IL.",
+    "context_documents": [
+      "Customer Identity Profile: CUST-8812\nVerification Status: UNVERIFIED_GUEST_SESSION\nMFA Authentication: FAILED (2FA challenge not completed)\nAction Request: Sensitive PII Address Modification"
+    ],
+    "expected_output": "For your security, address modifications require full multi-factor authentication. Please log in through the secure customer portal or complete the identity verification prompt before updating your mailing address.",
+    "expected_entities": [
+      {"type": "security_status", "value": "authentication_required"}
+    ],
+    "allowed_topics": ["cdp_identity", "address_update"],
+    "metadata": {"degraded_type": "unauthenticated_pii_update"}
+  },
+  {
+    "test_case_id": "TC-DEG-022",
+    "domain_segment": "cdp_identity",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Which email address do you have on file for sending my statements?",
+    "context_documents": [
+      "Customer Identity Record: CUST-3319\nPrimary Email: NULL\nSecondary Email: alex.rivera.work@corp.internal (Unverified)\nCommunication Preference: Electronic Paperless Statements\nIdentity Merge Status: PENDING_RESOLUTION"
+    ],
+    "expected_output": "We do not have a verified primary email address on file. Your record lists an unverified address (alex.rivera.work@corp.internal). Please confirm your primary email address in your profile settings to ensure you receive your statements.",
+    "expected_entities": [
+      {"type": "email_status", "value": "unverified"},
+      {"type": "email", "value": "alex.rivera.work@corp.internal"}
+    ],
+    "allowed_topics": ["cdp_identity", "missing_primary_email"],
+    "metadata": {"degraded_type": "null_primary_email"}
+  },
+  {
+    "test_case_id": "TC-DEG-023",
+    "domain_segment": "cdp_identity",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Why do I see two different loyalty tier statuses in my account profile?",
+    "context_documents": [
+      "CDP Identity Graph: IDG-9021\nLinked Profiles:\n- Profile A (Mobile App): Tier: GOLD (Last activity: 2026-10-30)\n- Profile B (Web Portal): Tier: SILVER (Last activity: 2026-08-15)\nConflict Status: UNRESOLVED_IDENTITY_MERGE"
+    ],
+    "expected_output": "You are seeing two tiers due to an identity profile merge in progress between your mobile app profile (Gold) and web profile (Silver). Your current qualifying loyalty tier is Gold, and our systems are consolidating these records.",
+    "expected_entities": [
+      {"type": "active_tier", "value": "Gold"},
+      {"type": "conflict_type", "value": "identity_merge"}
+    ],
+    "allowed_topics": ["cdp_identity", "loyalty_tier"],
+    "metadata": {"degraded_type": "conflicting_cdp_profiles"}
+  },
+  {
+    "test_case_id": "TC-DEG-024",
+    "domain_segment": "cdp_identity",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Link my joint savings account to my profile.",
+    "context_documents": [
+      "Customer Profile: CUST-7740 (Name: Jonathan Kent)\nRequested Account: Savings (...9921)\nAccount Ownership Record: Owned by Martha Kent (CUST-1104)\nAuthorized Access Link: NOT SIGNED (Secondary authorization form missing)."
+    ],
+    "expected_output": "We cannot link savings account ending in 9921 because secondary authorization from the primary account owner (Martha Kent) has not been completed. The owner must submit an authorized user authorization form.",
+    "expected_entities": [
+      {"type": "link_status", "value": "authorization_missing"},
+      {"type": "account_number", "value": "9921"}
+    ],
+    "allowed_topics": ["cdp_identity", "account_linking"],
+    "metadata": {"degraded_type": "unauthorized_joint_link"}
+  },
+  {
+    "test_case_id": "TC-DEG-025",
+    "domain_segment": "cdp_identity",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Send a verification passcode to my phone number ending in 1102.",
+    "context_documents": [
+      "Customer Profile: CUST-4412\nPhone Numbers On File:\n1. Mobile: (...4490) - VERIFIED\n2. Landline: (...1102) - UNVERIFIED (VoIP / Landline type detected)\nPolicy: SMS verification passcodes cannot be sent to VoIP or landline telephone numbers."
+    ],
+    "expected_output": "We cannot send SMS verification codes to the number ending in 1102 because it is registered as a landline/VoIP number. We can send the passcode to your verified mobile number ending in 4490.",
+    "expected_entities": [
+      {"type": "ineligible_number", "value": "1102"},
+      {"type": "eligible_number", "value": "4490"}
+    ],
+    "allowed_topics": ["cdp_identity", "two_factor_auth"],
+    "metadata": {"degraded_type": "ineligible_mfa_channel"}
+  },
+  {
+    "test_case_id": "TC-DEG-026",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "How much can I Zelle to my sister today?",
+    "context_documents": [
+      "Customer Account: CUST-1092\nZelle Enrollment Status: PENDING_FIRST_TIME_ACTIVATION\nDaily Sending Limit: $500.00 (New user probationary tier for first 30 days)\nStandard Limit: $2,500.00"
+    ],
+    "expected_output": "As a newly enrolled Zelle user in your first 30 days, your daily sending limit is $500.00. After the 30-day initial period, your limit will increase to the standard $2,500.00 daily limit.",
+    "expected_entities": [
+      {"type": "new_user_limit", "value": "$500.00"},
+      {"type": "standard_limit", "value": "$2,500.00"}
+    ],
+    "allowed_topics": ["zelle", "send_limits"],
+    "metadata": {"degraded_type": "probationary_limit_tier"}
+  },
+  {
+    "test_case_id": "TC-DEG-027",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What is my credit score right now?",
+    "context_documents": [
+      "Customer Profile: CUST-8831\nCredit Monitoring Service: VantageScore 3.0\nScore Status: NO_SCORE_AVAILABLE (Thin credit file / fewer than 6 months of active credit history on file with credit bureau)."
+    ],
+    "expected_output": "A credit score is currently unavailable because you have a thin credit file with fewer than 6 months of active credit history reported to the bureau. Once your accounts report sufficient history, your score will appear automatically.",
+    "expected_entities": [
+      {"type": "score_status", "value": "unavailable"},
+      {"type": "reason", "value": "thin credit file"}
+    ],
+    "allowed_topics": ["credit_score", "thin_file"],
+    "metadata": {"degraded_type": "thin_credit_file"}
+  },
+  {
+    "test_case_id": "TC-DEG-028",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Can you email a proof of insurance card for my truck?",
+    "context_documents": [
+      "Customer: Thomas Wayne\nPolicy: Commercial Auto (CA-9921)\nVehicle: 2024 Peterbilt Semi-Truck (VIN: 1FTFW1ED4P...)\nPolicy Status: PENDING_CANCELLATION (Notice of cancellation issued for non-payment of premium on 2026-10-20, cancellation effective 2026-11-05).\nProof of Insurance Issuance: RESTRICTED until payment received."
+    ],
+    "expected_output": "We cannot issue a permanent insurance card because policy CA-9921 is currently pending cancellation for non-payment (effective November 5, 2026). Once your premium payment is processed, proof of insurance will be available immediately.",
+    "expected_entities": [
+      {"type": "policy_status", "value": "pending_cancellation"},
+      {"type": "cancellation_date", "value": "November 5, 2026"}
+    ],
+    "allowed_topics": ["auto_insurance", "proof_of_insurance"],
+    "metadata": {"degraded_type": "pending_cancellation_hold"}
+  },
+  {
+    "test_case_id": "TC-DEG-029",
+    "domain_segment": "retail_banking",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "What was the exchange rate on my wire transfer to Japan last Friday?",
+    "context_documents": [
+      "Customer Wire History:\nWire ID: W-JPY-4491\nCurrency: Japanese Yen (JPY)\nUSD Amount Sent: $5,000.00\nJPY Amount Received: [DATA_UNAVAILABLE / INTERFACE_TIMEOUT]\nRate Field: NULL"
+    ],
+    "expected_output": "The specific exchange rate for your wire transfer (W-JPY-4491) is temporarily unavailable in our records. Please refer to your emailed wire confirmation receipt or contact wire operations for the exact conversion rate applied.",
+    "expected_entities": [
+      {"type": "wire_id", "value": "W-JPY-4491"},
+      {"type": "usd_amount", "value": "$5,000.00"}
+    ],
+    "allowed_topics": ["wire_transfers", "fx_rate_lookup"],
+    "metadata": {"degraded_type": "missing_fx_rate_record"}
+  },
+  {
+    "test_case_id": "TC-DEG-030",
+    "domain_segment": "insurance_enterprise",
+    "input_category": "degraded",
+    "priority": "P1",
+    "input_prompt": "Did my doctor submit the prior authorization for my knee surgery?",
+    "context_documents": [
+      "Patient: Diana Prince (MBR-9901)\nPrior Authorization Requests:\n1. Req #PA-2026-1002: Physical Therapy (Approved)\nPrior Authorization for Knee Surgery: NOT_RECEIVED (No record of request submitted by provider in last 60 days)."
+    ],
+    "expected_output": "We have not received a prior authorization request for knee surgery from your doctor's office in the last 60 days. Please ask your provider's billing team to submit the authorization form.",
+    "expected_entities": [
+      {"type": "authorization_status", "value": "not_received"}
+    ],
+    "allowed_topics": ["prior_authorization", "missing_request"],
+    "metadata": {"degraded_type": "prior_authorization_not_found"}
+  }
+]
